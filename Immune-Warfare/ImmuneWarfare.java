@@ -2,7 +2,7 @@ import java.awt.*;
 import java.awt.image.*;
 import java.awt.event.*;
 import javax.swing.*;
-import java.util.*;
+import java.io.*;
 
 public class ImmuneWarfare extends JFrame{
     
@@ -13,12 +13,38 @@ public class ImmuneWarfare extends JFrame{
     public static final int ME = 4; //menu
     public static final int DI = 5; //dialog
     
-    public void Game(){
-        setTitle ("Immune Warefare");
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(500,700);
-        setLocationRelativeTo(null);
-        setVisible(true);
-        setResizable(false);
+    private AntiV Player;
+    private boolean left, right, up, down;
+    private int state = ME;
+        
+    public void ImmuneWarfare(){
+        //Player = new AntiV(this);
+        //ImmuneWarfare IW = new ImmuneWarfare();
+        
+        JFrame fr = new JFrame("Immune Warefare");
+        fr.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        
+        JPanel pa = (JPanel)fr.getContentPane();
+        
+        JLabel la = new JLabel();
+        la.setIcon(new ImageIcon("img/player.png"));
+        pa.add(la);
+        
+        fr.setSize(500,700);
+        fr.setLocationRelativeTo(null);
+        fr.setVisible(true);
+        fr.setResizable(false);
+    }
+    
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                new ImmuneWarfare();
+            }
+        });
+    }
+    
+    public void paint(Graphics g){
+        //Player.display(g);
     }
 }

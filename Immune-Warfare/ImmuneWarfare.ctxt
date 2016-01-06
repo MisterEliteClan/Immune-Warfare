@@ -1,4 +1,10 @@
 #BlueJ class context
 comment0.params=
-comment0.target=void\ Game()
-numComments=1
+comment0.target=void\ ImmuneWarfare()
+comment1.params=args
+comment1.target=void\ main(java.lang.String[])
+comment2.params=
+comment2.target=void\ run()
+comment3.params=g
+comment3.target=void\ paint(java.awt.Graphics)
+numComments=4
