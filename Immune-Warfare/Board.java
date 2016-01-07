@@ -19,7 +19,7 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
 
     private Dimension d;
     
-    public static boolean SPACE, UP, DOWN, LEFT, RIGHT;
+    public static boolean SPACE, UP, DOWN, LEFT, RIGHT, keyP, ESC;
     
     Timer tm = new Timer(5,this);
     
@@ -29,25 +29,29 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
     public Board() {
         d = new Dimension(BO_WI, BO_HE);
         setBackground(Color.black);
+        
         tm.start();
+        
         addKeyListener(this);
         setFocusable(true);
         setFocusTraversalKeysEnabled(false);
-    } 
-    
+    }
+        
     public void paint(Graphics g){
         super.paint(g);
+        
+        Font big = new Font("Helvetica", Font.BOLD, 50);
+        FontMetrics metrb = this.getFontMetrics(big);
+        Font big2 = new Font("Comic Sans", Font.BOLD, 30);
+        FontMetrics metrb2 = this.getFontMetrics(big2);
+        Font small = new Font("Comic Sans", Font.BOLD, 10);
+        FontMetrics metrs = this.getFontMetrics(small);
 
         if(state == ME){
             String menutxt;
             
             g.setColor(grayDark);
             g.fillRect(0, 0, d.width, d.height);
-            
-            Font big = new Font("Helvetica", Font.BOLD, 50);
-            FontMetrics metrb = this.getFontMetrics(big);
-            Font small = new Font("Comic Sans", Font.BOLD, 30);
-            FontMetrics metrs = this.getFontMetrics(small);
             
             menutxt = "START";
             if(mepo == 1){
@@ -57,8 +61,8 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             }
             else if(mepo != 1){
                 g.setColor(gray);
-                g.setFont(small);
-                g.drawString(menutxt, (BO_WI - metrs.stringWidth(menutxt)) / 2, BO_HE / 2 -100);
+                g.setFont(big2);
+                g.drawString(menutxt, (BO_WI - metrb2.stringWidth(menutxt)) / 2, BO_HE / 2 -100);
             }
             
             menutxt = "SAMPLE TEXT";
@@ -69,11 +73,11 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             }
             else if(mepo != 2){
                 g.setColor(gray);
-                g.setFont(small);
-                g.drawString(menutxt, (BO_WI - metrs.stringWidth(menutxt)) / 2, BO_HE / 2);
+                g.setFont(big2);
+                g.drawString(menutxt, (BO_WI - metrb2.stringWidth(menutxt)) / 2, BO_HE / 2);
             }
             
-            menutxt = ":O";
+            menutxt = "TOM STINKT";
             if(mepo == 3){
                 g.setColor(grayLight);
                 g.setFont(big);
@@ -81,8 +85,8 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             }
             else if(mepo != 3){
                 g.setColor(gray);
-                g.setFont(small);
-                g.drawString(menutxt, (BO_WI - metrs.stringWidth(menutxt)) / 2, BO_HE / 2 + 100);
+                g.setFont(big2);
+                g.drawString(menutxt, (BO_WI - metrb2.stringWidth(menutxt)) / 2, BO_HE / 2 + 100);
             }
             
             if(SPACE == true){
@@ -95,8 +99,21 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             g.setColor(Color.blue);
             g.fillRect(0, 0, d.width, d.height);
         }
-    }    
-   
+        
+        else if(state == PA){
+            String pausetxt;
+            g.setColor(Color.black);
+            g.fillRect(0, 0, d.width, d.height);
+            g.setColor(Color.white);
+            g.setFont(big2);
+            pausetxt = "PAUSE";
+            g.drawString(pausetxt, (BO_WI - metrb2.stringWidth(pausetxt)) / 2, BO_HE / 2);
+            g.setFont(small);
+            pausetxt = "press ESC to return to the menu";
+            g.drawString(pausetxt, (BO_WI - metrs.stringWidth(pausetxt)) / 2, BO_HE / 2 + 50);
+        }
+    } 
+      
     public void actionPerformed(ActionEvent e){
         repaint();
     }
@@ -139,6 +156,26 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
         
         if (key == KeyEvent.VK_SPACE){
             SPACE = true;
+            if(state == ME && mepo == 1){
+                state = PL;
+            }
+        }
+        
+        if (key == KeyEvent.VK_P){
+            keyP = true;
+            if(state == PL){
+                state = PA;
+            }
+            else if(state == PA){
+                state = PL;
+            }
+        }
+        
+        if (key == KeyEvent.VK_ESCAPE){
+            ESC = true;
+            if(state == PA){
+                state = ME;
+            }
         }
     }
 
