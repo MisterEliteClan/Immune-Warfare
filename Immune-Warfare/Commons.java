@@ -19,6 +19,8 @@ public interface Commons{
     public static final int SH_WI = 1; //shot width
     public static final int SH_HE = 3; //shot height
     
+    public static final int DELAY = 17;
+    
     //gamestates
     public static final int PL = 0; //playing
     public static final int WI = 1; //win
@@ -26,6 +28,4 @@ public interface Commons{
     public static final int PA = 3; //pause
     public static final int ME = 4; //menu
     public static final int DI = 5; //dialog
-    
-    public static final int state = ME; //state int
 }
