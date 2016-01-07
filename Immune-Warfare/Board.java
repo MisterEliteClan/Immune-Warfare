@@ -1,21 +1,27 @@
-import java.awt.*;
-import java.awt.event.KeyAdapter;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Graphics;
+import java.awt.Toolkit;
+
 import java.awt.event.KeyEvent;
-import java.util.*;
-import javax.swing.*;
-import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyListener;
+
+import java.util.*;
+
+import javax.swing.*;
 import javax.swing.Timer;
 
 public class Board extends JPanel implements KeyListener, ActionListener, Commons {
 
-    Timer tm = new Timer(5,this);
+    private Dimension d;
     
     public static boolean SPACE, UP, DOWN, LEFT, RIGHT;
-
-    private Dimension d;
+    
+    Timer tm = new Timer(5,this);
     
     public static int state = ME;
     public static int mepo = 1;
@@ -35,46 +41,46 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
         if(state == ME){
             String menutxt;
             
-            g.setColor(Color.yellow);
+            g.setColor(grayDark);
             g.fillRect(0, 0, d.width, d.height);
             
             Font big = new Font("Helvetica", Font.BOLD, 50);
             FontMetrics metrb = this.getFontMetrics(big);
-            Font small = new Font("Helvetica", Font.BOLD, 30);
+            Font small = new Font("Comic Sans", Font.BOLD, 30);
             FontMetrics metrs = this.getFontMetrics(small);
             
             menutxt = "START";
             if(mepo == 1){
-                g.setColor(Color.red);
+                g.setColor(grayLight);
                 g.setFont(big);
                 g.drawString(menutxt, (BO_WI - metrb.stringWidth(menutxt)) / 2, BO_HE / 2 - 100);
             }
             else if(mepo != 1){
-                g.setColor(Color.black);
+                g.setColor(gray);
                 g.setFont(small);
                 g.drawString(menutxt, (BO_WI - metrs.stringWidth(menutxt)) / 2, BO_HE / 2 -100);
             }
             
-            menutxt = "SAMPLE";
+            menutxt = "SAMPLE TEXT";
             if(mepo == 2){
-                g.setColor(Color.red);
+                g.setColor(grayLight);
                 g.setFont(big);
                 g.drawString(menutxt, (BO_WI - metrb.stringWidth(menutxt)) / 2, BO_HE / 2);
             }
             else if(mepo != 2){
-                g.setColor(Color.black);
+                g.setColor(gray);
                 g.setFont(small);
                 g.drawString(menutxt, (BO_WI - metrs.stringWidth(menutxt)) / 2, BO_HE / 2);
             }
             
-            menutxt = "x.X.X__MLG.N0Sc0P3R__X.X.x";
+            menutxt = ":O";
             if(mepo == 3){
-                g.setColor(Color.red);
+                g.setColor(grayLight);
                 g.setFont(big);
                 g.drawString(menutxt, (BO_WI - metrb.stringWidth(menutxt)) / 2, BO_HE / 2 + 100);
             }
             else if(mepo != 3){
-                g.setColor(Color.black);
+                g.setColor(gray);
                 g.setFont(small);
                 g.drawString(menutxt, (BO_WI - metrs.stringWidth(menutxt)) / 2, BO_HE / 2 + 100);
             }
@@ -89,30 +95,8 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             g.setColor(Color.blue);
             g.fillRect(0, 0, d.width, d.height);
         }
-    }
-    
-    /*public void run() {
-        long beforeTime, timeDiff, sleep;
-
-        beforeTime = System.currentTimeMillis();
-
-        while (ingame) {
-            repaint();
-
-            timeDiff = System.currentTimeMillis() - beforeTime;
-            sleep = DELAY - timeDiff;
-
-            if (sleep < 0) 
-                sleep = 2;
-            try {
-                Thread.sleep(sleep);
-            } catch (InterruptedException e) {
-                System.out.println("interrupted");
-            }
-            beforeTime = System.currentTimeMillis();
-        }
-    }*/
-    
+    }    
+   
     public void actionPerformed(ActionEvent e){
         repaint();
     }

@@ -5,7 +5,6 @@ comment1.params=g
 comment1.target=void\ paint(java.awt.Graphics)
 comment2.params=e
 comment2.target=void\ actionPerformed(java.awt.event.ActionEvent)
-comment2.text=public\ void\ run()\ {\r\n\ \ \ \ \ \ \ \ long\ beforeTime,\ timeDiff,\ sleep;\r\n\r\n\ \ \ \ \ \ \ \ beforeTime\ \=\ System.currentTimeMillis();\r\n\r\n\ \ \ \ \ \ \ \ while\ (ingame)\ {\r\n\ \ \ \ \ \ \ \ \ \ \ \ repaint();\r\n\r\n\ \ \ \ \ \ \ \ \ \ \ \ timeDiff\ \=\ System.currentTimeMillis()\ -\ beforeTime;\r\n\ \ \ \ \ \ \ \ \ \ \ \ sleep\ \=\ DELAY\ -\ timeDiff;\r\n\r\n\ \ \ \ \ \ \ \ \ \ \ \ if\ (sleep\ <\ 0)\ \r\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sleep\ \=\ 2;\r\n\ \ \ \ \ \ \ \ \ \ \ \ try\ {\r\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Thread.sleep(sleep);\r\n\ \ \ \ \ \ \ \ \ \ \ \ }\ catch\ (InterruptedException\ e)\ {\r\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ System.out.println("interrupted");\r\n\ \ \ \ \ \ \ \ \ \ \ \ }\r\n\ \ \ \ \ \ \ \ \ \ \ \ beforeTime\ \=\ System.currentTimeMillis();\r\n\ \ \ \ \ \ \ \ }\r\n}
 comment3.params=e
 comment3.target=void\ keyTyped(java.awt.event.KeyEvent)
 comment4.params=e

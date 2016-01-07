@@ -1,3 +1,5 @@
+import java.awt.*;
+
 public interface Commons{
     //board
     public static final int BO_WI = 500; //board width
@@ -19,8 +21,6 @@ public interface Commons{
     public static final int SH_WI = 1; //shot width
     public static final int SH_HE = 3; //shot height
     
-    public static final int DELAY = 17;
-    
     //gamestates
     public static final int PL = 0; //playing
     public static final int WI = 1; //win
@@ -28,4 +28,9 @@ public interface Commons{
     public static final int PA = 3; //pause
     public static final int ME = 4; //menu
     public static final int DI = 5; //dialog
+    
+    //colors
+    Color grayDark = new Color (66, 66, 66);
+    Color gray = new Color (125, 125, 125);
+    Color grayLight = new Color (199, 199, 199);
 }
