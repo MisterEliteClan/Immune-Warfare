@@ -16,7 +16,7 @@ public class ImmuneWarfare extends JFrame implements Commons{
         setResizable(false);
     }
     
-    public static void main(String[] args) {
+    public static void main(String[] args){
         new ImmuneWarfare();
     }
 }

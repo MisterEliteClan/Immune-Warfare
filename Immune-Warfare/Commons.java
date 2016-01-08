@@ -6,13 +6,14 @@ public interface Commons{
     //board
     public static final int BO_WI = 500; //board width
     public static final int BO_HE = 700; //board height
+    public static final int DELAY = 17;
     
     //player
     public static final int PL_WI = 10; //player width
     public static final int PL_HE = 10; //player height
     
-    public static final String player = "";
-    
+    public static final int GROUND = BO_HE - 150;
+
     //alien
     public static final int AMOUNT = 20; //amount of aliens
     
@@ -36,6 +37,7 @@ public interface Commons{
     public static final int PA = 3; //pause
     public static final int ME = 4; //menu
     public static final int DI = 5; //dialog
+    public static final int HT = 6; //how to play
     
     //colors
     Color grayDark = new Color (66, 66, 66);
@@ -45,7 +47,7 @@ public interface Commons{
     //images
     public static final String pa_bg = "/img/graytransbg.png";
     public static final String me_bg = "/img/me_bg.png";
-    public static final String sampleimg = "/img/sample.png";
+    public static final String sampleimg = "/img/pl_bg.png";
     
     //fonts
     public static final Font big = new Font("Helvetica", Font.BOLD, 50);
