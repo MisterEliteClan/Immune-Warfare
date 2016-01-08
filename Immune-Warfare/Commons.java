@@ -1,4 +1,6 @@
 import java.awt.*;
+import java.awt.Font;
+import java.awt.FontMetrics;
 
 public interface Commons{
     //board
@@ -9,13 +11,19 @@ public interface Commons{
     public static final int PL_WI = 10; //player width
     public static final int PL_HE = 10; //player height
     
+    public static final String player = "";
+    
     //alien
     public static final int AMOUNT = 20; //amount of aliens
     
     public static final int AL_WI = 10; //alien width
     public static final int AL_HE = 10; //alien height
     
+    public static final String alien = "";
+    
     public static final int CHANCE = 5; //chance of shot
+    
+    public static final String shot = "";
     
     //shot
     public static final int SH_WI = 1; //shot width
@@ -33,4 +41,14 @@ public interface Commons{
     Color grayDark = new Color (66, 66, 66);
     Color gray = new Color (125, 125, 125);
     Color grayLight = new Color (199, 199, 199);
+    
+    //images
+    public static final String pa_bg = "/img/graytransbg.png";
+    public static final String me_bg = "/img/me_bg.png";
+    public static final String sampleimg = "/img/sample.png";
+    
+    //fonts
+    public static final Font big = new Font("Helvetica", Font.BOLD, 50);
+    public static final Font big2 = new Font("Helvetica", Font.BOLD, 30);
+    public static final Font small = new Font("Helvetica", Font.BOLD, 10);
 }

@@ -14,12 +14,13 @@ import java.util.*;
 
 import javax.swing.*;
 import javax.swing.Timer;
+import javax.swing.ImageIcon;
 
 public class Board extends JPanel implements KeyListener, ActionListener, Commons {
 
     private Dimension d;
     
-    public static boolean SPACE, UP, DOWN, LEFT, RIGHT, keyP, ESC;
+    public static boolean SPACE, UP, DOWN, LEFT, RIGHT, keyP, ESC, ENTER;
     
     Timer tm = new Timer(5,this);
     
@@ -40,77 +41,85 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
     public void paint(Graphics g){
         super.paint(g);
         
-        Font big = new Font("Helvetica", Font.BOLD, 50);
         FontMetrics metrb = this.getFontMetrics(big);
-        Font big2 = new Font("Comic Sans", Font.BOLD, 30);
         FontMetrics metrb2 = this.getFontMetrics(big2);
-        Font small = new Font("Comic Sans", Font.BOLD, 10);
         FontMetrics metrs = this.getFontMetrics(small);
 
         if(state == ME){
-            String menutxt;
+            String menutxt = "";
+            String mepo1 = "Start Game";
+            String mepo2 = "Upgrade Shop";
+            String mepo3 = "Sample Text";
             
             g.setColor(grayDark);
             g.fillRect(0, 0, d.width, d.height);
             
-            menutxt = "START";
-            if(mepo == 1){
-                g.setColor(grayLight);
-                g.setFont(big);
-                g.drawString(menutxt, (BO_WI - metrb.stringWidth(menutxt)) / 2, BO_HE / 2 - 100);
-            }
-            else if(mepo != 1){
-                g.setColor(gray);
-                g.setFont(big2);
-                g.drawString(menutxt, (BO_WI - metrb2.stringWidth(menutxt)) / 2, BO_HE / 2 -100);
-            }
+            ImageIcon me_bgii = new ImageIcon(this.getClass().getResource(me_bg));
+            g.drawImage(me_bgii.getImage(), 0, 0, null);
             
-            menutxt = "SAMPLE TEXT";
-            if(mepo == 2){
-                g.setColor(grayLight);
-                g.setFont(big);
-                g.drawString(menutxt, (BO_WI - metrb.stringWidth(menutxt)) / 2, BO_HE / 2);
-            }
-            else if(mepo != 2){
-                g.setColor(gray);
-                g.setFont(big2);
-                g.drawString(menutxt, (BO_WI - metrb2.stringWidth(menutxt)) / 2, BO_HE / 2);
-            }
-            
-            menutxt = "TOM STINKT";
-            if(mepo == 3){
-                g.setColor(grayLight);
-                g.setFont(big);
-                g.drawString(menutxt, (BO_WI - metrb.stringWidth(menutxt)) / 2, BO_HE / 2 + 100);
-            }
-            else if(mepo != 3){
-                g.setColor(gray);
-                g.setFont(big2);
-                g.drawString(menutxt, (BO_WI - metrb2.stringWidth(menutxt)) / 2, BO_HE / 2 + 100);
-            }
-            
-            if(SPACE == true){
-                g.setColor(Color.black);
-                g.fillRect(d.width / 2 - 50, d.height / 2 - 50, 100, 100);
-            }
-        }
-        
-        else if(state == PL){
-            g.setColor(Color.blue);
-            g.fillRect(0, 0, d.width, d.height);
-        }
-        
-        else if(state == PA){
-            String pausetxt;
-            g.setColor(Color.black);
-            g.fillRect(0, 0, d.width, d.height);
-            g.setColor(Color.white);
+            if(UP == true){g.setColor(grayLight);}
+            else{g.setColor(grayDark);}
+            menutxt = "ΛΛΛ";
             g.setFont(big2);
-            pausetxt = "PAUSE";
-            g.drawString(pausetxt, (BO_WI - metrb2.stringWidth(pausetxt)) / 2, BO_HE / 2);
+            g.drawString(menutxt, (BO_WI - metrb2.stringWidth(menutxt)) / 2, BO_HE / 2 -100);
+            
+            if(mepo == 1){menutxt = mepo3;}
+            else if(mepo == 2){menutxt = mepo1;}
+            else if(mepo == 3){menutxt = mepo2;}
+            g.setColor(gray);
+            g.setFont(big2);
+            g.drawString(menutxt, (BO_WI - metrb2.stringWidth(menutxt)) / 2, BO_HE / 2 -50);
+            
+            if(mepo == 1){menutxt = ">  " + mepo1 + "  <";}
+            else if(mepo == 2){menutxt = ">  " + mepo2 + "  <";}
+            else if(mepo == 3){menutxt = ">  " + mepo3 + "  <";}
+            g.setColor(grayLight);
+            g.setFont(big);
+            g.drawString(menutxt, (BO_WI - metrb.stringWidth(menutxt)) / 2, BO_HE / 2);
+            
+            if(mepo == 1){menutxt = mepo2;}
+            else if(mepo == 2){menutxt = mepo3;
+            }else if(mepo == 3){menutxt = mepo1;}
+            g.setColor(gray);
+            g.setFont(big2);
+            g.drawString(menutxt, (BO_WI - metrb2.stringWidth(menutxt)) / 2, BO_HE / 2 + 50);
+            
+            if(DOWN == true){g.setColor(grayLight);}
+            else{g.setColor(grayDark);}
+            menutxt = "VVV";
+            g.setFont(big2);
+            g.drawString(menutxt, (BO_WI - metrb2.stringWidth(menutxt)) / 2, BO_HE / 2 + 100);
+                
+            menutxt = "Press ENTER to choose";
+            g.setColor(gray);
             g.setFont(small);
-            pausetxt = "press ESC to return to the menu";
-            g.drawString(pausetxt, (BO_WI - metrs.stringWidth(pausetxt)) / 2, BO_HE / 2 + 50);
+            g.drawString(menutxt, (BO_WI - metrs.stringWidth(menutxt)) / 2, BO_HE / 2 + 150);
+            
+            menutxt = "Copyright by MisterEliteClan GbR.";
+            g.setColor(gray);
+            g.setFont(small);
+            g.drawString(menutxt, (BO_WI - metrs.stringWidth(menutxt)) - 10, BO_HE - 40);
+        }
+        
+        else if(state == PL || state == PA){
+            ImageIcon pl_bgii = new ImageIcon(this.getClass().getResource(sampleimg));
+            g.drawImage(pl_bgii.getImage(), 0, 0, null);
+            
+            if(state == PA){
+                String pausetxt;
+                //g.setColor(grayDark);
+                //g.fillRect(0, 0, d.width, d.height);
+                ImageIcon pa_bgii = new ImageIcon(this.getClass().getResource(pa_bg));
+                g.drawImage(pa_bgii.getImage(), 0, 0, null);
+                g.setColor(grayLight);
+                g.setFont(big2);
+                pausetxt = "PAUSE";
+                g.drawString(pausetxt, (BO_WI - metrb2.stringWidth(pausetxt)) / 2, BO_HE / 2);
+                g.setColor(gray);
+                g.setFont(small);
+                pausetxt = "press ESC to return to the menu";
+                g.drawString(pausetxt, (BO_WI - metrs.stringWidth(pausetxt)) / 2, BO_HE / 2 +50);
+            }
         }
     } 
       
@@ -154,13 +163,6 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             RIGHT = true;
         }
         
-        if (key == KeyEvent.VK_SPACE){
-            SPACE = true;
-            if(state == ME && mepo == 1){
-                state = PL;
-            }
-        }
-        
         if (key == KeyEvent.VK_P){
             keyP = true;
             if(state == PL){
@@ -177,6 +179,13 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
                 state = ME;
             }
         }
+        
+        if (key == KeyEvent.VK_ENTER){
+            ENTER = true;
+            if(state == ME && mepo == 1){
+                state = PL;
+            }
+        }        
     }
 
     @Override
