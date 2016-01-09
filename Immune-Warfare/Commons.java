@@ -53,4 +53,5 @@ public interface Commons{
     public static final Font big = new Font("Helvetica", Font.BOLD, 50);
     public static final Font big2 = new Font("Helvetica", Font.BOLD, 30);
     public static final Font small = new Font("Helvetica", Font.BOLD, 10);
+    public static final Font small2 = new Font("Helvetica",Font.BOLD,16);
 }

@@ -29,6 +29,9 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
     public static int state = ME;
     public static int mepo = 1;
     
+    int Score=0,Level=1,HP=100;
+    String scoreString,levelString,hpString;
+    
     private Thread animator;
     
     public Board(){
@@ -64,13 +67,24 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             state = PA;
         }
     }
+            
+    public void integersToString(){
+            
+        Integer mIS = new Integer(Score); 
+        scoreString = mIS.toString(); 
+        Integer mIL = new Integer(Level); 
+        levelString = mIL.toString(); 
+        Integer mIHP = new Integer(HP); 
+        hpString = mIHP.toString(); 
+        
+    }
       
     public void paint(Graphics g){
         super.paint(g);
-        
         FontMetrics metrb = this.getFontMetrics(big);
         FontMetrics metrb2 = this.getFontMetrics(big2);
         FontMetrics metrs = this.getFontMetrics(small);
+        FontMetrics metrs2 = this.getFontMetrics(small2);
         
         g.setColor(grayDark);
         g.fillRect(0, 0, d.width, d.height);
@@ -176,6 +190,19 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             
             drawPlayer(g);
             
+            integersToString();
+            
+            g.setFont(small2);
+            g.setColor(grayLight);
+            g.drawString("Score:",7,568);
+            g.drawString("Level:",(BO_WI - metrs2.stringWidth("Level"))/2,568);
+            g.drawString("HP",BO_WI - metrs2.stringWidth("HP") - 10,568);
+            g.drawString(scoreString,7,582);
+            g.drawString(levelString,(BO_WI - metrs2.stringWidth(levelString))/2,582);
+            g.drawString(hpString,BO_WI - metrs2.stringWidth(hpString) - 10,582);
+
+            
+            
             if(state == PA){
                 String pausetxt;
                 ImageIcon pa_bgii = new ImageIcon(this.getClass().getResource(pa_bg));
@@ -273,7 +300,15 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             if(state == ME && mepo == 3){
                 state = HT;
             }
-        }        
+        }    
+        
+        if(key == KeyEvent.VK_SPACE){
+            if(state == PL){
+                Score +=10;
+                Level += 1;
+                HP +=100;
+             }
+        }
     }
 
     @Override
@@ -301,4 +336,5 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             SPACE = false;
         }
     }
+    
 }

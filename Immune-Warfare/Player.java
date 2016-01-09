@@ -4,7 +4,7 @@ import javax.swing.ImageIcon;
 
 public class Player extends Sprite implements Commons{
     
-    private final int ST_X = BO_WI / 2;
+    private final int ST_X = BO_WI / 2 - 16;
     private final int ST_Y = BO_HE - 182;
     
     private boolean SPACE, LEFT, RIGHT;
