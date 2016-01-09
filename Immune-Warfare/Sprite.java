@@ -6,7 +6,8 @@ public class Sprite{
     protected int x;
     protected int y;
     protected boolean dying;
-    protected int dx;
+    protected int dxl;
+    protected int dxr;
     
     public Sprite(){
         visible = true;

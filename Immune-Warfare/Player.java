@@ -5,39 +5,61 @@ import javax.swing.ImageIcon;
 public class Player extends Sprite implements Commons{
     
     private final int ST_X = BO_WI / 2;
-    private final int ST_Y = BO_HE - 150 - 32;
+    private final int ST_Y = BO_HE - 182;
+    
+    private boolean SPACE, LEFT, RIGHT;
     
     private final String player = "/img/player/player1.png";
+    private final String playerl = "/img/player/player1l.png";
+    private final String playerr = "/img/player/player1r.png";
+    private final String playerahh = "/img/player/player1ahh.png";
     
     private int width;
     
+    ImageIcon ii = new ImageIcon(this.getClass().getResource(player));
+    ImageIcon iil = new ImageIcon(this.getClass().getResource(playerl));
+    ImageIcon iir = new ImageIcon(this.getClass().getResource(playerr));
+    ImageIcon iiahh = new ImageIcon(this.getClass().getResource(playerahh));
+    
     public Player(){
-        ImageIcon ii = new ImageIcon(this.getClass().getResource(player));
-        
-        width = ii.getImage().getWidth(null);
-        
-        setImage(ii.getImage());
         setX(ST_X);
         setY(ST_Y);
     }
     
     public void act(){
-        x += dx;
-        if (x <= 2){x = 2;}
-        if (x >= BO_WI - 2*width){x = BO_WI - 2*width;}
+        width = ii.getImage().getWidth(null);
+
+        x += + dxl + dxr;
+        
+        if(x <= 2){x = 2;}
+        if(x >= BO_WI - width - 8){x = BO_WI - width - 8;}
+        
+        if(dxl == 0 && dxr == 0){setImage(ii.getImage());}
+        else if(dxl == -2 && dxr == 0){setImage(iil.getImage());}
+        else if((dxl == 0 && dxr == 2)){setImage(iir.getImage());}
+        
+        if(RIGHT == true){dxr = 2;}
+        else{dxr = 0;}
+        
+        if(LEFT == true){dxl = -2;}
+        else{dxl = 0;}
+        
+        if(SPACE == true){setImage(iiahh.getImage());}
     }
     
     public void keyPressed(KeyEvent e){
         int key = e.getKeyCode();
 
-        if (key == KeyEvent.VK_LEFT){dx = -2;}
-        if (key == KeyEvent.VK_RIGHT){dx = 2;}
+        if(key == KeyEvent.VK_LEFT){LEFT = true;}
+        if(key == KeyEvent.VK_RIGHT){RIGHT = true;}
+        if(key == KeyEvent.VK_SPACE){SPACE = true;}
     }
 
     public void keyReleased(KeyEvent e){
         int key = e.getKeyCode();
 
-        if (key == KeyEvent.VK_LEFT){dx = 0;}
-        if (key == KeyEvent.VK_RIGHT){dx = 0;}
+        if(key == KeyEvent.VK_LEFT){LEFT = false;}
+        if(key == KeyEvent.VK_RIGHT){RIGHT = false;}
+        if(key == KeyEvent.VK_SPACE){SPACE = false;}
     }
 }
