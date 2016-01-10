@@ -12,8 +12,9 @@ public interface Commons{
     public static final int PL_WI = 10; //player width
     public static final int PL_HE = 10; //player height
     
-    public static final int GROUND = BO_HE - 150;
-
+    public static final int GROUND = BO_HE - 80;
+    public static final int TOP = 40;
+    
     //alien
     public static final int AMOUNT = 20; //amount of aliens
     
@@ -45,9 +46,9 @@ public interface Commons{
     Color grayLight = new Color (199, 199, 199);
     
     //images
-    public static final String pa_bg = "/img/graytransbg.png";
-    public static final String me_bg = "/img/me_bg.png";
-    public static final String sampleimg = "/img/pl_bg.png";
+    public static final String pa_bg = "/img/backgrounds/graytransbg.png";
+    public static final String me_bg = "/img/backgrounds/me_bg.png";
+    public static final String sampleimg = "/img/backgrounds/pl_bg.png";
     
     //fonts
     public static final Font big = new Font("Helvetica", Font.BOLD, 50);
