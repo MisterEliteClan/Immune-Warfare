@@ -20,13 +20,20 @@ import javax.swing.ImageIcon;
 public class Board extends JPanel implements KeyListener, ActionListener, Commons {
 
     private Dimension d;
+    private ArrayList viruses;
     private Player player;
     
     Timer tm = new Timer(5,this);
     
-    public static boolean SPACE, UP, DOWN, LEFT, RIGHT, keyP, ESC, ENTER;     
+    public static boolean SPACE, UP, DOWN, LEFT, RIGHT, keyP, ESC, ENTER;
+    
     public static int score=0,level=1,hp=100;
     public static String scoreS,levelS,hpS;
+    
+    private int virusX = 0;
+    private int virusY = TOP + 5;
+    private int direction = -1;
+    private int deaths = 0;
     
     public static int state = ME;
     public static int mepo = 1; 
@@ -53,7 +60,35 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
     }
     
     public void init(){
+        viruses = new ArrayList();
+        
+        ImageIcon iiv = new ImageIcon(this.getClass().getResource(virus));
+        
+        for(int i = 0; i < 4; i++){
+            for(int j = 0; j < 4; j++){
+                Virus virus = new Virus(virusX + 18 * j, virusY + 18 * i);
+                virus.setImage(iiv.getImage());
+                viruses.add(virus);
+            }
+        }
+        
         player = new Player();
+    }
+    
+    public void drawViruses(Graphics g){
+        Iterator it = viruses.iterator();
+
+        while (it.hasNext()) {
+            Virus virus = (Virus) it.next();
+
+            if (virus.isVisible()) {
+                g.drawImage(virus.getImage(), virus.getX(), virus.getY(), this);
+            }
+
+            if (virus.isDying()) {
+                virus.die();
+            }
+        }
     }
     
     public void drawPlayer(Graphics g) {
@@ -220,6 +255,7 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             playtxt = "Upgrates";
             g.drawString(playtxt,BO_WI - metrs2.stringWidth(playtxt) - 8, GROUND + 5 + 16);
             
+            drawViruses(g);
             drawPlayer(g);
 
             if(state == PA){
@@ -243,7 +279,53 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
     }
     
     public void animationCycle(){
+        //player
+        
         player.act();
+         
+        //virus
+        
+        Iterator it1 = viruses.iterator();
+
+         while (it1.hasNext()) {
+             Virus a1 = (Virus) it1.next();
+             int x = a1.getX();
+
+             if (x  >= BO_WI - BO_RIGHT && direction != -1) {
+                 direction = -1;
+                 Iterator i1 = viruses.iterator();
+                 while (i1.hasNext()) {
+                     Virus a2 = (Virus) i1.next();
+                     a2.setY(a2.getY() + GO_DOWN);
+                 }
+             }
+
+            if (x <= BO_LEFT && direction != 1) {
+                direction = 1;
+
+                Iterator i2 = viruses.iterator();
+                while (i2.hasNext()) {
+                    Virus a = (Virus)i2.next();
+                    a.setY(a.getY() + GO_DOWN);
+                }
+            }
+        }
+        
+        Iterator it = viruses.iterator();
+        
+        while (it.hasNext()) {
+            Virus virus = (Virus) it.next();
+            if (virus.isVisible()) {
+
+                int y = virus.getY();
+
+                if (y > GROUND - VI_HE) {
+                    state = PA;
+                }
+
+                virus.act(direction);
+            }
+        }  
     }
     
     public void actionPerformed(ActionEvent e){

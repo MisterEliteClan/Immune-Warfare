@@ -15,21 +15,25 @@ public interface Commons{
     public static final int GROUND = BO_HE - 80;
     public static final int TOP = 40;
     
-    //alien
-    public static final int AMOUNT = 20; //amount of aliens
+    //virus
+    public static final int AMOUNT = 20; //amount of viruses
     
-    public static final int AL_WI = 10; //alien width
-    public static final int AL_HE = 10; //alien height
+    public static final int VI_WI = 10; //virus width
+    public static final int VI_HE = 10; //virus height
+    
+    public static final int BO_RIGHT = 30; //border right
+    public static final int BO_LEFT = 5; // border left
+    public static final int GO_DOWN = 15; //viruses go down
     
     public static final String alien = "";
     
     public static final int CHANCE = 5; //chance of shot
-    
-    public static final String shot = "";
-    
+
     //shot
     public static final int SH_WI = 1; //shot width
     public static final int SH_HE = 3; //shot height
+    
+    public static final String shot = "";
     
     //gamestates
     public static final int PL = 0; //playing
@@ -49,7 +53,8 @@ public interface Commons{
     public static final String pa_bg = "/img/backgrounds/graytransbg.png";
     public static final String me_bg = "/img/backgrounds/me_bg.png";
     public static final String sampleimg = "/img/backgrounds/pl_bg.png";
-    
+    public static final String virus = "/img/virus.png";
+ 
     //fonts
     public static final Font big = new Font("Helvetica", Font.BOLD, 50);
     public static final Font big2 = new Font("Helvetica", Font.BOLD, 30);
