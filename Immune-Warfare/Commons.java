@@ -47,13 +47,25 @@ public interface Commons{
     //colors
     Color grayDark = new Color (66, 66, 66);
     Color gray = new Color (125, 125, 125);
-    Color grayLight = new Color (199, 199, 199);
+    Color grayLight = new Color (166, 166, 166);
+    Color red = new Color (255, 26, 0);
+    Color orange = new Color (255, 153, 0);
+    Color yellow = new Color (255, 230, 0);
+    Color green = new Color (204, 255, 51);
     
     //images
     public static final String pa_bg = "/img/backgrounds/graytransbg.png";
     public static final String me_bg = "/img/backgrounds/me_bg.png";
     public static final String sampleimg = "/img/backgrounds/pl_bg.png";
-    public static final String virus = "/img/virus.png";
+    
+    public static final String playerImage = "/img/player/player1.png";
+    public static final String playerlImage = "/img/player/player1l.png";
+    public static final String playerrImage = "/img/player/player1r.png";
+    public static final String playerahhImage = "/img/player/player1ahh.png";
+    public static final String playerahhlImage = "/img/player/player1ahhl.png";
+    public static final String playerahhrImage = "/img/player/player1ahhr.png";
+    
+    public static final String virusImage = "/img/virus/virus1.png";
  
     //fonts
     public static final Font big = new Font("Helvetica", Font.BOLD, 50);

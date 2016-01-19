@@ -4,7 +4,7 @@ public class Virus extends Sprite{
     
     private Bomb bomb;
     
-    public static final String virus = "/img/virus.png";    
+    public static final String virus = "/img/virus/virus1.png";    
     
     public Virus(int x, int y){
         this.x = x;
