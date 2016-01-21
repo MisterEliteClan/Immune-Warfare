@@ -21,9 +21,9 @@ public interface Commons{
     public static final int VI_WI = 10; //virus width
     public static final int VI_HE = 10; //virus height
     
-    public static final int BO_RIGHT = 30; //border right
-    public static final int BO_LEFT = 5; // border left
-    public static final int GO_DOWN = 15; //viruses go down
+    public static final int BO_RIGHT = 40; //border right
+    public static final int BO_LEFT = 2; // border left
+    public static final int GO_DOWN = 90; //viruses go down
     
     public static final String alien = "";
     
