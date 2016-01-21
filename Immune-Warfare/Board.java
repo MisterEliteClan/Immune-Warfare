@@ -455,7 +455,6 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
                 score += 10;
                 level += 1;
                 if(hp < 100){hp += 10;}
-                directionX = 0;
             }
         }
     }
