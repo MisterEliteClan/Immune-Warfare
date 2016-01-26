@@ -141,6 +141,7 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             String mepo2 = "Upgrade Shop";
             String mepo3 = "How to play?";
             String mepo4 = "Options";
+            String mepo5 = "Exit Game";
             
             ImageIcon me_bgii = new ImageIcon(this.getClass().getResource(me_bg));
             g.drawImage(me_bgii.getImage(), 0, 0, null);
@@ -151,10 +152,11 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             g.setFont(big2);
             g.drawString(menutxt, (BO_WI - metrb2.stringWidth(menutxt)) / 2, BO_HE / 2 -100);
             
-            if(mepo == 1){menutxt = mepo4;}
+            if(mepo == 1){menutxt = mepo5;}
             else if(mepo == 2){menutxt = mepo1;}
             else if(mepo == 3){menutxt = mepo2;}
             else if(mepo == 4){menutxt = mepo3;}
+            else if(mepo == 5){menutxt = mepo4;}
             g.setColor(gray);
             g.setFont(big2);
             g.drawString(menutxt, (BO_WI - metrb2.stringWidth(menutxt)) / 2, BO_HE / 2 -50);
@@ -163,6 +165,7 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             else if(mepo == 2){menutxt = ">  " + mepo2 + "  <";}
             else if(mepo == 3){menutxt = ">  " + mepo3 + "  <";}
             else if(mepo == 4){menutxt = ">  " + mepo4 + "  <";}
+            else if(mepo == 5){menutxt = ">  " + mepo5 + "  <";}
             g.setColor(grayLight);
             g.setFont(big);
             g.drawString(menutxt, (BO_WI - metrb.stringWidth(menutxt)) / 2, BO_HE / 2);
@@ -170,7 +173,8 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             if(mepo == 1){menutxt = mepo2;}
             else if(mepo == 2){menutxt = mepo3;}
             else if(mepo == 3){menutxt = mepo4;}
-            else if(mepo == 4){menutxt = mepo1;}
+            else if(mepo == 4){menutxt = mepo5;}
+            else if(mepo == 5){menutxt = mepo1;}
             g.setColor(gray);
             g.setFont(big2);
             g.drawString(menutxt, (BO_WI - metrb2.stringWidth(menutxt)) / 2, BO_HE / 2 + 50);
@@ -389,7 +393,7 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             if(state == ME){
                 mepo--;
                 if(mepo == 0){
-                    mepo = 4;
+                    mepo = 5;
                 }
             }
             if(state == PL){
@@ -401,7 +405,7 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             DOWN = true;
             if(state == ME){
                 mepo++;
-                if(mepo == 5){
+                if(mepo == 6){
                     mepo = 1;
                 }
             }
@@ -447,6 +451,9 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             }
             if(state == ME && mepo == 3){
                 state = HT;
+            }
+            if(state == ME && mepo == 5){
+                System.exit(0);
             }
         }    
         
