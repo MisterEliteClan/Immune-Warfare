@@ -28,12 +28,17 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
     
     public static boolean SPACE, UP, DOWN, LEFT, RIGHT, keyP, ESC, ENTER;
     
-    public static int score=0,level=1,hp=100;
+    public static int score,level,hp;
     public static String scoreS,levelS,hpS;
     
+    private int virusAmountX = 5;
+    private int virusAmountY = 5;
     private int virusX = 0;
     private int virusY = TOP + 5;
-    private int direction = -1;
+    private int y2 = 0;
+    private int virusAmount = 0;
+    private int directionX = 1;
+    private int directionY = 1;
     private int deaths = 0;
     
     public static int state = ME;
@@ -65,15 +70,23 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
         
         ImageIcon iiv = new ImageIcon(this.getClass().getResource(virusImage));
         
-        for(int i = 0; i < 4; i++){
-            for(int j = 0; j < 4; j++){
-                Virus virus = new Virus(virusX + 32 * j, virusY + 32 * i);
+        for(int i = 0; i < virusAmountY; i++){
+            for(int j = 0; j < virusAmountX; j++){
+                Virus virus = new Virus(virusX + VI_WI * j, virusY + VI_HE * i);
                 virus.setImage(iiv.getImage());
                 viruses.add(virus);
             }
         }
         
         player = new Player();
+    }
+    
+    public void reset(){
+        score = 0;
+        level = 0;
+        hp= 100;
+        directionX = 1;
+        init();
     }
     
     public void drawViruses(Graphics g){
@@ -129,6 +142,7 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             String mepo2 = "Upgrade Shop";
             String mepo3 = "How to play?";
             String mepo4 = "Options";
+            String mepo5 = "Exit Game";
             
             ImageIcon me_bgii = new ImageIcon(this.getClass().getResource(me_bg));
             g.drawImage(me_bgii.getImage(), 0, 0, null);
@@ -139,10 +153,11 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             g.setFont(big2);
             g.drawString(menutxt, (BO_WI - metrb2.stringWidth(menutxt)) / 2, BO_HE / 2 -100);
             
-            if(mepo == 1){menutxt = mepo4;}
+            if(mepo == 1){menutxt = mepo5;}
             else if(mepo == 2){menutxt = mepo1;}
             else if(mepo == 3){menutxt = mepo2;}
             else if(mepo == 4){menutxt = mepo3;}
+            else if(mepo == 5){menutxt = mepo4;}
             g.setColor(gray);
             g.setFont(big2);
             g.drawString(menutxt, (BO_WI - metrb2.stringWidth(menutxt)) / 2, BO_HE / 2 -50);
@@ -151,6 +166,7 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             else if(mepo == 2){menutxt = ">  " + mepo2 + "  <";}
             else if(mepo == 3){menutxt = ">  " + mepo3 + "  <";}
             else if(mepo == 4){menutxt = ">  " + mepo4 + "  <";}
+            else if(mepo == 5){menutxt = ">  " + mepo5 + "  <";}
             g.setColor(grayLight);
             g.setFont(big);
             g.drawString(menutxt, (BO_WI - metrb.stringWidth(menutxt)) / 2, BO_HE / 2);
@@ -158,7 +174,8 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             if(mepo == 1){menutxt = mepo2;}
             else if(mepo == 2){menutxt = mepo3;}
             else if(mepo == 3){menutxt = mepo4;}
-            else if(mepo == 4){menutxt = mepo1;}
+            else if(mepo == 4){menutxt = mepo5;}
+            else if(mepo == 5){menutxt = mepo1;}
             g.setColor(gray);
             g.setFont(big2);
             g.drawString(menutxt, (BO_WI - metrb2.stringWidth(menutxt)) / 2, BO_HE / 2 + 50);
@@ -278,6 +295,7 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             drawViruses(g);
             drawPlayer(g);
             
+                    
             if(hp == 0){state = PA;}
 
             if(state == PA){
@@ -308,28 +326,35 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
         //virus
         
         Iterator it1 = viruses.iterator();
-
-         while (it1.hasNext()) {
-             Virus a1 = (Virus) it1.next();
-             int x = a1.getX();
-
-             if (x  >= BO_WI - BO_RIGHT && direction != -1) {
-                 direction = -1;
-                 Iterator i1 = viruses.iterator();
-                 while (i1.hasNext()) {
-                     Virus a2 = (Virus) i1.next();
-                     a2.setY(a2.getY() + GO_DOWN);
-                 }
-             }
-
-            if (x <= BO_LEFT && direction != 1) {
-                direction = 1;
-
-                Iterator i2 = viruses.iterator();
-                while (i2.hasNext()) {
-                    Virus a = (Virus)i2.next();
-                    a.setY(a.getY() + GO_DOWN);
+        
+         while (it1.hasNext()){
+            Virus v1 = (Virus) it1.next();
+            
+            virusAmount++;
+            
+            int x = v1.getX();
+            int y = v1.getY();
+            
+            if (virusAmount >= virusAmountX * virusAmountY){
+                if(directionX != 0){
+                    y2 = v1.getY();
                 }
+            
+                if(x  >= BO_WI - BO_RIGHT && directionX != -1){
+                    directionX = 0;
+                    if(y == y2 + GO_DOWN){
+                        directionX = -1;
+                    }
+                }
+            
+                if((x - (virusAmountX - 1) * VI_WI) <= BO_LEFT && directionX != 1){
+                    directionX = 0;
+                    if(y == y2 + GO_DOWN){
+                        directionX = 1;
+                    }
+                }
+            
+                virusAmount = 0;
             }
         }
         
@@ -345,9 +370,14 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
                     state = PA;
                 }
 
-                virus.act(direction);
+                if(directionX != 0){
+                    virus.actX(directionX);
+                }
+                else if(directionX == 0){
+                    virus.actY(directionY);
+                }
             }
-        }  
+        }
     }
     
     public void actionPerformed(ActionEvent e){
@@ -372,7 +402,7 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             if(state == ME){
                 mepo--;
                 if(mepo == 0){
-                    mepo = 4;
+                    mepo = 5;
                 }
             }
             if(state == PL){
@@ -384,7 +414,7 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             DOWN = true;
             if(state == ME){
                 mepo++;
-                if(mepo == 5){
+                if(mepo == 6){
                     mepo = 1;
                 }
             }
@@ -424,11 +454,15 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
         if (key == KeyEvent.VK_ENTER){
             ENTER = true;
             if(state == ME && mepo == 1){
+                reset();
                 state = PL;
                 
             }
             if(state == ME && mepo == 3){
                 state = HT;
+            }
+            if(state == ME && mepo == 5){
+                System.exit(0);
             }
         }    
         
@@ -437,7 +471,7 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
                 score += 10;
                 level += 1;
                 if(hp < 100){hp += 10;}
-             }
+            }
         }
     }
 

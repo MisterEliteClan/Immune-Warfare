@@ -1,0 +1,104 @@
+[Files]
+File0=Board.java
+File1=Commons.java
+File2=ImmuneWarfare.java
+File3=Player.java
+File4=Sprite.java
+File5=Virus.java
+
+[Box:  - Board]
+X=314
+Y=40
+MinVis=0
+ShowParameter=4
+SortOrder=0
+ShowIcons=0
+FontSize=10
+FontName=MS Sans Serif
+
+[Box:  - Commons]
+X=132
+Y=1226
+MinVis=0
+ShowParameter=4
+SortOrder=0
+ShowIcons=0
+FontSize=10
+FontName=MS Sans Serif
+
+[Box:  - ImmuneWarfare]
+X=20
+Y=40
+MinVis=0
+ShowParameter=4
+SortOrder=0
+ShowIcons=0
+FontSize=10
+FontName=MS Sans Serif
+
+[Box:  - Player]
+X=435
+Y=793
+MinVis=0
+ShowParameter=4
+SortOrder=0
+ShowIcons=0
+FontSize=10
+FontName=MS Sans Serif
+
+[Box:  - Sprite]
+X=670
+Y=40
+MinVis=0
+ShowParameter=4
+SortOrder=0
+ShowIcons=0
+FontSize=10
+FontName=MS Sans Serif
+
+[Box:  - Virus]
+X=639
+Y=793
+MinVis=0
+ShowParameter=4
+SortOrder=0
+ShowIcons=0
+FontSize=10
+FontName=MS Sans Serif
+
+[Box:  - Virus$Bomb]
+X=765
+Y=1226
+MinVis=0
+ShowParameter=4
+SortOrder=0
+ShowIcons=0
+FontSize=10
+FontName=MS Sans Serif
+
+[Diagram]
+comments=0
+OffsetX=0
+OffsetY=0
+Visibility=0
+ShowParameter=4
+SortOrder=0
+ShowIcons=0
+ShowConnections=0
+Fontname=MS Sans Serif
+Fontsize=10
+ShowObjectDiagram=0
+
+[Connections]
+V0=Board#Commons#Implements####0#0#0
+V1=Board#Player#AssociationDirected####0#0#0
+V2=ImmuneWarfare#Commons#Implements####0#0#0
+V3=Player#Sprite#Inheritends####0#0#0
+V4=Player#Commons#Implements####0#0#0
+V5=Virus#Sprite#Inheritends####0#0#0
+V6=Virus$Bomb#Sprite#Inheritends####0#0#0
+V7=Virus#Virus$Bomb#AssociationDirected####0#0#0
+
+[Interactive]
+I0=
+

@@ -9,21 +9,19 @@ public interface Commons{
     public static final int DELAY = 17;
     
     //player
-    public static final int PL_WI = 10; //player width
-    public static final int PL_HE = 10; //player height
+    public static final int PL_WI = 32; //player width
+    public static final int PL_HE = 32; //player height
     
     public static final int GROUND = BO_HE - 80;
     public static final int TOP = 40;
     
-    //virus
-    public static final int AMOUNT = 20; //amount of viruses
+    //virus  
+    public static final int VI_WI = 32; //virus width
+    public static final int VI_HE = 32; //virus height
     
-    public static final int VI_WI = 10; //virus width
-    public static final int VI_HE = 10; //virus height
-    
-    public static final int BO_RIGHT = 30; //border right
-    public static final int BO_LEFT = 5; // border left
-    public static final int GO_DOWN = 15; //viruses go down
+    public static final int BO_RIGHT = 40; //border right
+    public static final int BO_LEFT = 2; // border left
+    public static final int GO_DOWN = 32; //viruses go down
     
     public static final String alien = "";
     

@@ -5,8 +5,8 @@ import javax.swing.*;
 import java.io.*;
 
 public class ImmuneWarfare extends JFrame implements Commons{
-    
-    public void ImmuneWarfare(){
+  
+    public ImmuneWarfare(){
         add(new Board());
         setTitle("Immune Warefare");
         setDefaultCloseOperation(EXIT_ON_CLOSE);    
@@ -15,7 +15,7 @@ public class ImmuneWarfare extends JFrame implements Commons{
         setVisible(true);
         setResizable(false);
     }
-    
+  
     public static void main(String[] args){
         new ImmuneWarfare();
     }

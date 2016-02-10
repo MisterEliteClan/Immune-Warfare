@@ -15,8 +15,12 @@ public class Virus extends Sprite{
         setImage(iib.getImage());
     }
     
-    public void act(int direction){
-        this.x += direction;
+    public void actX(int directionX){
+        this.x += directionX;
+    }
+    
+    public void actY(int directionY){
+        this.y += directionY;
     }
     
     public class Bomb extends Sprite{
