@@ -21,7 +21,7 @@ public interface Commons{
     
     public static final int BO_RIGHT = 40; //border right
     public static final int BO_LEFT = 2; // border left
-    public static final int GO_DOWN = 40; //viruses go down
+    public static final int GO_DOWN = 32; //viruses go down
     
     public static final String alien = "";
     

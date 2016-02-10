@@ -32,7 +32,7 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
     public static String scoreS,levelS,hpS;
     
     private int virusAmountX = 5;
-    private int virusAmountY = 3;
+    private int virusAmountY = 5;
     private int virusX = 0;
     private int virusY = TOP + 5;
     private int y2 = 0;
@@ -85,7 +85,7 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
         score = 0;
         level = 0;
         hp= 100;
-        
+        directionX = 1;
         init();
     }
     
@@ -329,30 +329,32 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
         
          while (it1.hasNext()){
             Virus v1 = (Virus) it1.next();
+            
+            virusAmount++;
+            
             int x = v1.getX();
             int y = v1.getY();
             
-            System.out.println("Y " + y);
-            System.out.println("Y2 " + y2);
-            System.out.println("Y2 + GO_DOWN " + (y2 + GO_DOWN));
-            System.out.println("virusAmount " + virusAmount);
-            
-            if(directionX != 0){
-                y2 = v1.getY();
-            }
-            
-            if(x  >= BO_WI - BO_RIGHT && directionX != -1){
-                directionX = 0;
-                if(y == y2 + GO_DOWN){
-                    directionX = -1;
+            if (virusAmount >= virusAmountX * virusAmountY){
+                if(directionX != 0){
+                    y2 = v1.getY();
                 }
-            }
             
-            if(x <= BO_LEFT && directionX != 1){
-                directionX = 0;
-                if(y == y2 + GO_DOWN){
-                    directionX = 1;
+                if(x  >= BO_WI - BO_RIGHT && directionX != -1){
+                    directionX = 0;
+                    if(y == y2 + GO_DOWN){
+                        directionX = -1;
+                    }
                 }
+            
+                if((x - (virusAmountX - 1) * VI_WI) <= BO_LEFT && directionX != 1){
+                    directionX = 0;
+                    if(y == y2 + GO_DOWN){
+                        directionX = 1;
+                    }
+                }
+            
+                virusAmount = 0;
             }
         }
         
