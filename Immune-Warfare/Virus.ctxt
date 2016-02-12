@@ -5,6 +5,4 @@ comment1.params=directionX
 comment1.target=void\ actX(int)
 comment2.params=directionY
 comment2.target=void\ actY(int)
-comment3.params=
-comment3.target=Virus.Bomb\ getBomb()
-numComments=4
+numComments=3

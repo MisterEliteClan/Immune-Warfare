@@ -23,13 +23,9 @@ public class Virus extends Sprite{
         this.y += directionY;
     }
     
-    public Bomb getBomb(){
-        return bomb;
-    }
-    
     public class Bomb extends Sprite{
 
-        private final String bomb = "/img/shot and bomb/bomb.png";
+        private final String bomb = "/img/bomb.png";
         private boolean destroyed;
 
         public Bomb(int x, int y){
