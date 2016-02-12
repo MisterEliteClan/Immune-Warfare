@@ -265,7 +265,7 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             g.drawString(httxt, (BO_WI - metrs.stringWidth(httxt)) / 2, BO_HE - 50);
         }
         
-        else if(state == PL || state == PA){
+        else if(state == PL || state == PA || state == LO || state == WI){
             String playtxt;
             
             //ImageIcon pl_bgii = new ImageIcon(this.getClass().getResource(sampleimg));
@@ -305,11 +305,7 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             playtxt = "Upgrades";
             g.drawString(playtxt,BO_WI - metrs2.stringWidth(playtxt) - 8, GROUND + 5 + 16);
             
-            drawViruses(g);
-            drawPlayer(g);
-            drawBomb(g);
-                    
-            if(hp == 0){state = PA;}
+            if(hp == 0){state = LO;}
 
             if(state == PA){
                 String pausetxt;
@@ -325,6 +321,25 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
                 pausetxt = "press ESC to return to the menu";
                 g.drawString(pausetxt, (BO_WI - metrs.stringWidth(pausetxt)) / 2, BO_HE / 2 +50);
             }
+            
+            if(state == LO){
+                String losttxt;
+                ImageIcon pa_bgii = new ImageIcon(this.getClass().getResource(pa_bg));
+                g.drawImage(pa_bgii.getImage(), 0, 0, null);
+                g.setColor(grayLight);
+                g.setFont(big2);
+                losttxt = "You Loose";
+                g.drawString(losttxt, (BO_WI - metrb2.stringWidth(losttxt)) / 2, BO_HE / 2);
+                
+                g.setColor(gray);
+                g.setFont(small);
+                losttxt = "press ESC to return to the menu";
+                g.drawString(losttxt, (BO_WI - metrs.stringWidth(losttxt)) / 2, BO_HE / 2 +50);
+            }
+            
+            drawBomb(g);
+            drawViruses(g);
+            drawPlayer(g);      
         }
         
         Toolkit.getDefaultToolkit().sync();
@@ -380,7 +395,7 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
                 int y = virus.getY();
 
                 if (y > GROUND - VI_HE) {
-                    state = PA;
+                    state = LO;
                 }
 
                 if(directionX != 0){
@@ -403,7 +418,6 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             Virus.Bomb b = a.getBomb();
             
             if(shot == CHANCE && a.isVisible() && b.isDestroyed()){
-
                 b.setDestroyed(false);
                 b.setX(a.getX());
                 b.setY(a.getY());
@@ -413,7 +427,8 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             int bombY = b.getY();
             int playerX = player.getX();
             int playerY = player.getY();
-
+            
+            //hitbox
             if(player.isVisible() && !b.isDestroyed()){
                 if(bombX >= (playerX-8-16) && bombX <= (playerX+PL_WI-8) && bombY+BOMB_HE >= (playerY+16) && bombY+BOMB_HE <= (playerY+PL_HE)){
                     hp -= 10;
@@ -499,14 +514,16 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             if(state == PL){
                 if(hp > 0){hp -= 10;}
              }
+            if(state == LO){
+                state = ME;
+            }
         }
         
         if (key == KeyEvent.VK_ENTER){
             ENTER = true;
             if(state == ME && mepo == 1){
                 reset();
-                state = PL;
-                
+                state = PL; 
             }
             if(state == ME && mepo == 3){
                 state = HT;
