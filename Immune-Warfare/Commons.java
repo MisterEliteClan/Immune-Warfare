@@ -25,8 +25,12 @@ public interface Commons{
     
     public static final String alien = "";
     
-    public static final int CHANCE = 5; //chance of shot
+    public static final int CHANCE = 14; //chance of shot
 
+    //bomb
+    public static final int BOMB_WI = 32; //bomb width
+    public static final int BOMB_HE = 32; //bomb height
+    
     //shot
     public static final int SH_WI = 1; //shot width
     public static final int SH_HE = 3; //shot height

@@ -31,8 +31,8 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
     public static int score,level,hp;
     public static String scoreS,levelS,hpS;
     
-    private int virusAmountX = 5;
-    private int virusAmountY = 5;
+    private int virusAmountX = 3;
+    private int virusAmountY = 2;
     private int virusX = 0;
     private int virusY = TOP + 5;
     private int y2 = 0;
@@ -113,6 +113,19 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
         if (player.isDying()) {
             player.die();
             state = PA;
+        }
+    }
+    
+    public void drawBomb(Graphics g){
+        Iterator i3 = viruses.iterator();
+        
+        while(i3.hasNext()){
+            Virus a = (Virus) i3.next();
+            Virus.Bomb b = a.getBomb();
+            
+            if(!b.isDestroyed()){
+                g.drawImage(b.getImage(), b.getX(), b.getY(), this);
+            }
         }
     }
             
@@ -294,7 +307,7 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             
             drawViruses(g);
             drawPlayer(g);
-            
+            drawBomb(g);
                     
             if(hp == 0){state = PA;}
 
@@ -375,6 +388,43 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
                 }
                 else if(directionX == 0){
                     virus.actY(directionY);
+                }
+            }
+        }
+        
+        //Bombs
+        
+        Iterator i3 = viruses.iterator();
+        Random generator = new Random();
+
+        while(i3.hasNext()){
+            int shot = generator.nextInt(15);
+            Virus a = (Virus) i3.next();
+            Virus.Bomb b = a.getBomb();
+            
+            if(shot == CHANCE && a.isVisible() && b.isDestroyed()){
+
+                b.setDestroyed(false);
+                b.setX(a.getX());
+                b.setY(a.getY());
+            }
+
+            int bombX = b.getX();
+            int bombY = b.getY();
+            int playerX = player.getX();
+            int playerY = player.getY();
+
+            if(player.isVisible() && !b.isDestroyed()){
+                if(bombX >= (playerX-8-16) && bombX <= (playerX+PL_WI-8) && bombY+BOMB_HE >= (playerY+16) && bombY+BOMB_HE <= (playerY+PL_HE)){
+                    hp -= 10;
+                    b.setDestroyed(true);;
+               }
+            }
+
+            if (!b.isDestroyed()) {
+                b.setY(b.getY() + 1);
+                if (b.getY() >= GROUND - BOMB_HE){
+                    b.setDestroyed(true);
                 }
             }
         }
