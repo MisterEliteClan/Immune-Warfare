@@ -519,7 +519,6 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
                             virus.setDying(true);
                             deaths++;
                             shot.die();
-                            
                     }
                 }
             }
@@ -552,7 +551,6 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             if(x <= BO_LEFT && directionX != 1){             
                 directionX = 0;
                 if(dY >= GO_DOWN){
-                    
                     directionX = 1;
                     dY = 0;
                 }
@@ -580,6 +578,8 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
                     }
                 }
             }
+            
+            System.out.println("dY: " + dY + ", dY2: " + dY2);
         }
         
         //Bombs
