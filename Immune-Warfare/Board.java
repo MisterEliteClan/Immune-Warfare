@@ -39,14 +39,16 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
     private int virusAmountY = 2;
     private int virusX = 0;
     private int virusY = TOP + 5;
-    private int y2 = 0;
-    private int virusAmount = 0;
     private int directionX = 1;
     private int directionY = 1;
-    private int deaths = 0;
+    
+    //placeholder
+    private int dY, dY2;
+    
+    private int deaths;
     
     public static int state = ME;
-    public static int mepo = 1; 
+    public static int mepo = 1;
     
     private Thread animator;
     
@@ -529,31 +531,25 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
         
          while (it1.hasNext()){
             Virus v1 = (Virus) it1.next();
-            
-            virusAmount++;
-            
+
             int x = v1.getX();
             int y = v1.getY();
             
-            if (virusAmount >= virusAmountX * virusAmountY){
-                if(directionX != 0){
-                    y2 = v1.getY();
+            if(x  >= BO_WI - BO_RIGHT && directionX != -1){
+                directionX = 0;
+                if(dY >= GO_DOWN){
+                    directionX = -1;
+                    dY = 0;
                 }
+            }
             
-                if(x  >= BO_WI - BO_RIGHT && directionX != -1){
-                    directionX = 0;
-                    if(y == y2 + GO_DOWN){
-                        directionX = -1;
-                    }
+            if(x <= BO_LEFT && directionX != 1){             
+                directionX = 0;
+                if(dY >= GO_DOWN){
+                    
+                    directionX = 1;
+                    dY = 0;
                 }
-            
-                if((x - (virusAmountX - 1) * VI_WI) <= BO_LEFT && directionX != 1){
-                    directionX = 0;
-                    if(y == y2 + GO_DOWN){
-                        directionX = 1;
-                    }
-                }
-                virusAmount = 0;
             }
         }
         
@@ -569,8 +565,13 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
                 if(directionX != 0){
                     virus.actX(directionX);
                 }
-                else if(directionX == 0){
+                if(directionX == 0){
                     virus.actY(directionY);
+                    dY2++;
+                    if(dY2 == virusAmountY * virusAmountX){
+                        dY += directionY;
+                        dY2 = 0;
+                    }
                 }
             }
         }
@@ -615,7 +616,6 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
                     
                     b.setY(b.getY() + 1);
                     if (b.getY() >= GROUND - BOMB_HE){
-                        
                          b.setDestroyed(true);
                     }
                 }

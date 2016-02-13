@@ -50,8 +50,6 @@ public class Player extends Sprite implements Commons{
             }
         }
         
-        
-        
         if(RIGHT == true){dxr = 2;}
         else{dxr = 0;}
         
