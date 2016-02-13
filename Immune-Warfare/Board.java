@@ -414,8 +414,8 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             g.setColor(grayLight); 
 
             drawBomb(g);
-            drawViruses(g);
             drawShot(g);
+            drawViruses(g);
             drawPlayer(g);            
            
             if(state == WI){
@@ -491,16 +491,22 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
         
         if(shot.isVisible()){
             Iterator it = viruses.iterator();
-            int shotX = shot.getX();
-            int shotY = shot.getY();
+            int shotX = shot.getX() + SH_WI / 2;
+            int shotY = shot.getY() + SH_HE / 2;
 
             while(it.hasNext()){
                 Virus virus = (Virus) it.next();
-                int virusX = virus.getX();
-                int virusY = virus.getY();
+                int virusX = virus.getX() + VI_WI / 2;
+                int virusY = virus.getY() + VI_HE / 2;
 
                 if(virus.isVisible() && shot.isVisible()){
-                    if (shotX >= (virusX) && shotX <= (virusX + VI_WI) && shotY >= (virusY) && shotY <= (virusY + VI_HE) ) {
+                    
+                    //virus hitbox
+                    
+                    if (shotX + SH_SPACE_SIDE >= virusX 
+                    && shotX - SH_SPACE_SIDE <= virusX 
+                    && shotY + SH_HE / 2 + SH_SPACE_TOP >= virusY 
+                    && shotY <= virusY){
                             ImageIcon ii = new ImageIcon(getClass().getResource(virusImage));
                             virus.setImage(ii.getImage());
                             virus.setDying(true);
@@ -556,13 +562,10 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
         while (it.hasNext()) {
             Virus virus = (Virus) it.next();
             if (virus.isVisible()) {
-
                 int y = virus.getY();
-
                 if (y > GROUND - VI_HE) {
                     state = LO;
                 }
-
                 if(directionX != 0){
                     virus.actX(directionX);
                 }
@@ -583,28 +586,31 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             Virus.Bomb b = a.getBomb();
             
             if(shot == CHANCE && a.isVisible() && b.isDestroyed()) {
-
-
                 b.setDestroyed(false);
                 b.setX(a.getX());
                 b.setY(a.getY());
             }
 
-            int bombX = b.getX();
-            int bombY = b.getY();
-            int playerX = player.getX();
-            int playerY = player.getY();
+            int bombX = b.getX() + BOMB_WI / 2;
+            int bombY = b.getY() + BOMB_HE / 2;
+            int playerX = player.getX() + PL_WI / 2;
+            int playerY = player.getY() + PL_HE / 2;
 
-            if(player.isVisible() && !b.isDestroyed()) {
-                if(bombX >= (playerX-BOMB_SPACE_SIDE-BOMB_WI/2) && bombX <= (playerX+PL_WI-BOMB_SPACE_SIDE) && bombY+BOMB_HE >= (playerY+BOMB_SPACE_TOP) && bombY+BOMB_HE <= (playerY+PL_HE) ) {
-                        hp -= 10;
-                        b.setDestroyed(true);;
-                    }
+            if(player.isVisible() && !b.isDestroyed()) { 
+                
+                //player hitbox
+                
+                if(bombX + BOMB_WI / 2 +  BOMB_SPACE_SIDE>= (playerX) 
+                && bombX - BOMB_WI / 2 -  BOMB_SPACE_SIDE <= (playerX) 
+                && bombY + BOMB_HE >= (playerY + BOMB_SPACE_TOP) 
+                && bombY <= (playerY) ){
+                    hp -= 10;
+                    b.setDestroyed(true);;
+                }
             }
             
             if (!b.isDestroyed()) {
                 b.setY(b.getY() + 1);
-                
                 if (!b.isDestroyed()) {
                     
                     b.setY(b.getY() + 1);
