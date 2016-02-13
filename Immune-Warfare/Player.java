@@ -37,13 +37,13 @@ public class Player extends Sprite implements Commons{
                 setImage(iiahh.getImage());
             }
         }
-        else if(dxl == -2 && dxr == 0){
+        if(dxl == -2 && dxr == 0){
             setImage(iil.getImage());
             if(SPACE == true){
                 setImage(iiahhl.getImage());
             }
         }
-        else if((dxl == 0 && dxr == 2)){
+        if((dxl == 0 && dxr == 2)){
             setImage(iir.getImage());
             if(SPACE == true){
                 setImage(iiahhr.getImage());

@@ -457,9 +457,9 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
                 g.setColor(gray);
                 g.setFont(small);
                 wintxt = "Level: " + level;
-                g.drawString(wintxt, (BO_WI - metrs2.stringWidth(wintxt)) / 2, BO_HE / 2 +50);
+                g.drawString(wintxt, (BO_WI - metrs.stringWidth(wintxt)) / 2, BO_HE / 2 +50);
                 wintxt = "Score: " + score;
-                g.drawString(wintxt, (BO_WI - metrs2.stringWidth(wintxt)) / 2, BO_HE / 2 +150);
+                g.drawString(wintxt, (BO_WI - metrs.stringWidth(wintxt)) / 2, BO_HE / 2 +150);
                 wintxt = "press ESC to return to the menu";
                 g.drawString(wintxt, (BO_WI - metrs.stringWidth(wintxt)) / 2, BO_HE / 2 +200);
             }
@@ -490,6 +490,10 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
         
         player.act();
         
+        if(deaths == virusAmountY * virusAmountX){
+            state = WI;
+        }
+        
         //shot
         
         if(shot.isVisible()){
@@ -515,6 +519,7 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
                             virus.setDying(true);
                             deaths++;
                             shot.die();
+                            
                     }
                 }
             }
@@ -525,7 +530,7 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
                 shot.die();
             else shot.setY(y);
         }
-         
+        
         //virus
         
         Iterator it1 = viruses.iterator();
