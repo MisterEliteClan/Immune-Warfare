@@ -33,7 +33,7 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
     public static boolean SPACE, UP, DOWN, LEFT, RIGHT, keyP, ESC, ENTER;
     
     public static int score,level,hp;
-    public static String scoreS,levelS,hpS;
+    public static String scoreS,levelS,hpS,scoreSave,levelSave, Username = "Player 1";
     
     private int virusAmountX = 3;
     private int virusAmountY = 2;
@@ -49,6 +49,7 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
     
     public static int state = ME;
     public static int mepo = 1;
+    public static int oppo = 1; 
     
     private Thread animator;
     
@@ -90,7 +91,7 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
     
     public void reset(){
         score = 0;
-        level = 0;
+        level = 1;
         hp= 100;
         directionX = 1;
         deaths = 0;
@@ -157,8 +158,7 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
              FileReader fr = new FileReader("Save.txt");
              BufferedReader br = new BufferedReader(fr);
 
-             String zeile1 = br.readLine();
-             score = Integer.parseInt(zeile1);
+             score = Integer.parseInt(br.readLine());
              System.out.println(score);
          
              String zeile2 = br.readLine();
@@ -166,6 +166,10 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
              System.out.println(level);
          
              System.out.println(level+score);
+         
+             String zeile3 = br.readLine();
+             Username = zeile3;
+             System.out.println(Username);
          
              br.close();
          } catch(IOException e) {
@@ -182,6 +186,8 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             String n = System.getProperty("line.separator");
             bw.write(n);
             bw.write("" + level);
+            bw.write(n);
+            bw.write("" + Username);
         
             bw.close();
         } catch(IOException e) {
@@ -196,6 +202,8 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
         FontMetrics metrb2 = this.getFontMetrics(big2);
         FontMetrics metrs = this.getFontMetrics(small);
         FontMetrics metrs2 = this.getFontMetrics(small2);
+        FontMetrics metrm = this.getFontMetrics(middle);
+        FontMetrics metrm2 = this.getFontMetrics(middle2);
         
         g.setColor(grayDark);
         g.fillRect(0, 0, d.width, d.height);
@@ -317,61 +325,66 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
         }
         
         if(state == OP){
-            String httxt;
-
-            int line = 50;
+            String optionstxt = "";
+            String oppo1 = "Easy Mode";
+            String oppo2 = "MLG X-Tr3m3 T3RR0R S3TT1NG5";
+            String oppo3 = "M8";
+            String oppo4 = "J01N F4C3-CL4N";
+            String oppo5 = "Kill yourself!";
             
+            
+           
             g.setColor(grayLight);
             g.setFont(big2);
+            optionstxt = "Options";
+            g.drawString(optionstxt, (BO_WI - metrb2.stringWidth(optionstxt)) / 2, BO_HE/2 -150);
             
-            httxt = "Basics:";
-            g.drawString(httxt, (BO_WI - metrb2.stringWidth(httxt)) / 2, line);
-            line += 50;
-             
+            if(UP == true){g.setColor(grayLight);}
+            else{g.setColor(grayDark);}
+            optionstxt = "Λ";
+            g.setFont(middle2);
+            g.drawString(optionstxt, (BO_WI - metrm2.stringWidth(optionstxt)) / 2, BO_HE / 2 -100);
+            
+            if(oppo == 1){optionstxt = oppo5;}
+            else if(oppo == 2){optionstxt = oppo1;}
+            else if(oppo == 3){optionstxt = oppo2;}
+            else if(oppo == 4){optionstxt = oppo3;}
+            else if(oppo == 5){optionstxt = oppo4;}
             g.setColor(gray);
-            g.setFont(small);
+            g.setFont(middle);
+            g.drawString(optionstxt, (BO_WI - metrm.stringWidth(optionstxt)) / 2, BO_HE / 2 -50);
             
-            httxt = "You navigate with your Arrowkeys and Enter";
-            g.drawString(httxt, (BO_WI - metrs.stringWidth(httxt)) / 2, line);
-            line += 50;
-            
-            httxt = "Ingame you will move with your Arrowkeys, shoot with Space and pause with P";
-            g.drawString(httxt, (BO_WI - metrs.stringWidth(httxt)) / 2, line);
-            line += 50;
-            
+            if(oppo == 1){optionstxt = ">  " + oppo1 + "  <";}
+            else if(oppo == 2){optionstxt = ">  " + oppo2 + "  <";}
+            else if(oppo == 3){optionstxt = ">  " + oppo3 + "  <";}
+            else if(oppo == 4){optionstxt = ">  " + oppo4 + "  <";}
+            else if(oppo == 5){optionstxt = ">  " + oppo5 + "  <";}
             g.setColor(grayLight);
-            g.setFont(big2);
+            g.setFont(middle2);
+            g.drawString(optionstxt, (BO_WI - metrm2.stringWidth(optionstxt)) / 2, BO_HE / 2);
             
-            line += 50;
-            httxt = "Lexicon:";
-            g.drawString(httxt, (BO_WI - metrb2.stringWidth(httxt)) / 2, line);
-            line += 50;
-            
+            if(oppo == 1){optionstxt = oppo2;}
+            else if(oppo == 2){optionstxt = oppo3;}
+            else if(oppo == 3){optionstxt = oppo4;}
+            else if(oppo == 4){optionstxt = oppo5;}
+            else if(oppo == 5){optionstxt = oppo1;}
             g.setColor(gray);
-            g.setFont(small);
+            g.setFont(middle);
+            g.drawString(optionstxt, (BO_WI - metrm.stringWidth(optionstxt)) / 2, BO_HE / 2 + 50);
             
-            httxt = "This is you:";
-            g.drawString(httxt, 50, line);
+            if(DOWN == true){g.setColor(grayLight);}
+            else{g.setColor(grayDark);}
+            optionstxt = "V";
+            g.setFont(middle2);
+            g.drawString(optionstxt, (BO_WI - metrm2.stringWidth(optionstxt)) / 2, BO_HE / 2 + 100);
+                
+            optionstxt = "Press ENTER to choose";
+            g.setColor(gray);
+            g.setFont(small2);
+            g.drawString(optionstxt, (BO_WI - metrs2.stringWidth(optionstxt)) / 2, BO_HE / 2 + 150);
             
-            ImageIcon plii1 = new ImageIcon(this.getClass().getResource(playerImage));
-            g.drawImage(plii1.getImage(), BO_WI / 2 - 16 - 2 -32, line - 16, null);
-            ImageIcon plii2 = new ImageIcon(this.getClass().getResource(playerlImage));
-            g.drawImage(plii2.getImage(), BO_WI / 2 - 16, line - 16, null);
-            ImageIcon plii4 = new ImageIcon(this.getClass().getResource(playerrImage));
-            g.drawImage(plii4.getImage(), BO_WI / 2 - 16 + 2 + 32, line - 16, null);
-            
-            line += 50;
-            
-            httxt = "This your enemy:";
-            g.drawString(httxt, 50, line);
-            
-            ImageIcon vii = new ImageIcon(this.getClass().getResource(virusImage));
-            g.drawImage(vii.getImage(), BO_WI / 2 - 16, line - 16, null);
-            
-            line += 50;
-            
-            httxt = "press ESC to return to the menu";
-            g.drawString(httxt, (BO_WI - metrs.stringWidth(httxt)) / 2, BO_HE - 50);
+            optionstxt = "press ESC to return to the menu";
+            g.drawString(optionstxt, (BO_WI - metrs2.stringWidth(optionstxt)) / 2, BO_HE - 50);
         }
         
         if(state == PL || state == PA || state == LO || state == WI){
@@ -421,11 +434,6 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             drawViruses(g);
             drawPlayer(g);            
            
-            if(state == WI){
-                Save();
-                String wintxt;
-            }
-
             if(hp == 0){state = LO;}
 
             if(state == PA){
@@ -445,6 +453,7 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             }
                 
             if(state == WI){
+                Save();
                 String wintxt;
                 ImageIcon pa_bgii = new ImageIcon(this.getClass().getResource(pa_bg));
                 g.drawImage(pa_bgii.getImage(), 0, 0, null);
@@ -471,7 +480,7 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
                 g.setColor(grayLight);
                 g.setFont(big2);
                 
-                losttxt = "You Loose";
+                losttxt = "You Lose";
                 g.drawString(losttxt, (BO_WI - metrb2.stringWidth(losttxt)) / 2, BO_HE / 2);
                 
                 g.setColor(gray);
@@ -653,6 +662,12 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
                     mepo = 5;
                 }
             }
+            if(state == OP){
+                oppo--;
+                if(oppo == 0){
+                    oppo = 5;
+                }
+            }
             if(state == PL){
                 if(hp > 0){hp -= 10;}
             }
@@ -664,6 +679,12 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
                 mepo++;
                 if(mepo == 6){
                     mepo = 1;
+                }
+            }
+            if(state == OP){
+                oppo++;
+                if(oppo == 6){
+                    oppo = 1;
                 }
             }
         }
@@ -686,11 +707,20 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             }
         }
         
+        if (key == KeyEvent.VK_W){
+            state = WI;
+        }
+        
+        if (key == KeyEvent.VK_H){
+            readSaveFile();
+        }
+        
         if (key == KeyEvent.VK_ESCAPE){
             ESC = true;
 
             if(state == PA || state == WI || state == LO || state == OP || state == HT){
                 state = ME;
+                oppo = 1;
             }
             if(state == PL){
                 if(hp > 0){hp -= 10;}
@@ -708,9 +738,15 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             }
             if(state == ME && mepo == 4){
                 state = OP;
+                oppo=1;
             }
             if(state == ME && mepo == 5){
                 System.exit(0);
+            }
+            if(state == OP && oppo == 4){
+                Username = JOptionPane.showInputDialog("Please enter your username:");
+                System.out.println(Username); 
+                Save();
             }
         }    
         

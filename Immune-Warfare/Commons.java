@@ -49,7 +49,7 @@ public interface Commons{
     public static final int ME = 4; //menu
     public static final int DI = 5; //dialog
     public static final int HT = 6; //how to play
-    public static final int OP = 7; //pause
+    public static final int OP = 7; //options
     
     //colors
     Color grayDark = new Color (66, 66, 66);
@@ -79,4 +79,6 @@ public interface Commons{
     public static final Font big2 = new Font("Helvetica", Font.BOLD, 30);
     public static final Font small = new Font("Helvetica", Font.BOLD, 10);
     public static final Font small2 = new Font("Helvetica",Font.BOLD,16);
+    public static final Font middle = new Font("Helvetica", Font.BOLD, 20);
+    public static final Font middle2 = new Font("Helvetica",Font.BOLD,26);
 }
