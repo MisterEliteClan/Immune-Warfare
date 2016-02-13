@@ -8,22 +8,15 @@ public class Player extends Sprite implements Commons{
     private final int ST_Y = GROUND - 32;
     
     private boolean SPACE, LEFT, RIGHT;
-    
-    private final String player = "/img/player/player1.png";
-    private final String playerl = "/img/player/player1l.png";
-    private final String playerr = "/img/player/player1r.png";
-    private final String playerahh = "/img/player/player1ahh.png";
-    private final String playerahhl = "/img/player/player1ahhl.png";
-    private final String playerahhr = "/img/player/player1ahhr.png";
-    
+        
     private int width;
     
-    ImageIcon ii = new ImageIcon(this.getClass().getResource(player));
-    ImageIcon iil = new ImageIcon(this.getClass().getResource(playerl));
-    ImageIcon iir = new ImageIcon(this.getClass().getResource(playerr));
-    ImageIcon iiahh = new ImageIcon(this.getClass().getResource(playerahh));
-    ImageIcon iiahhl = new ImageIcon(this.getClass().getResource(playerahhl));
-    ImageIcon iiahhr = new ImageIcon(this.getClass().getResource(playerahhr));
+    ImageIcon ii = new ImageIcon(this.getClass().getResource(playerImage));
+    ImageIcon iil = new ImageIcon(this.getClass().getResource(playerlImage));
+    ImageIcon iir = new ImageIcon(this.getClass().getResource(playerrImage));
+    ImageIcon iiahh = new ImageIcon(this.getClass().getResource(playerahhImage));
+    ImageIcon iiahhl = new ImageIcon(this.getClass().getResource(playerahhlImage));
+    ImageIcon iiahhr = new ImageIcon(this.getClass().getResource(playerahhrImage));
     
     public Player(){
         setX(ST_X);

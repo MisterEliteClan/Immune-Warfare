@@ -24,13 +24,13 @@ public interface Commons{
     public static final int GO_DOWN = 32; //viruses go down
     
     public static final String alien = "";
-    
-    public static final int CHANCE = 5; //chance of shot
-    
+        
     //bomb
     public static final int BOMB_WI = 32; //bomb width
     public static final int BOMB_HE = 32; //bomb height
 
+    public static final int CHANCE = 14; //chance of shot
+    
     //shot
     public static final int SH_WI = 1; //shot width
     public static final int SH_HE = 3; //shot height
@@ -45,7 +45,7 @@ public interface Commons{
     public static final int ME = 4; //menu
     public static final int DI = 5; //dialog
     public static final int HT = 6; //how to play
-    public static final int OP = 7; //how to play
+    public static final int OP = 7; //pause
     
     //colors
     Color grayDark = new Color (66, 66, 66);

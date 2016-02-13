@@ -28,6 +28,7 @@ public class Virus extends Sprite{
     }
     
     public class Bomb extends Sprite{
+
         private final String bomb = "/img/shot and bomb/bomb.png";
         private boolean destroyed;
 

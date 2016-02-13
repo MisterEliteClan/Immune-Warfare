@@ -32,10 +32,10 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
     public static boolean SPACE, UP, DOWN, LEFT, RIGHT, keyP, ESC, ENTER;
     
     public static int score,level,hp;
-    public static String scoreS,levelS,hpS,scoreSave,levelSave;
+    public static String scoreS,levelS,hpS;
     
-    private int virusAmountX = 5;
-    private int virusAmountY = 5;
+    private int virusAmountX = 3;
+    private int virusAmountY = 2;
     private int virusX = 0;
     private int virusY = TOP + 5;
     private int y2 = 0;
@@ -49,14 +49,12 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
     
     private Thread animator;
     
-    private JTextField[] fields;
-    
     public Board(){
         d = new Dimension(BO_WI, BO_HE);
         setBackground(Color.black);
         
         tm.start();
-                
+        
         addKeyListener(this);
         setFocusable(true);
         setFocusTraversalKeysEnabled(false);
@@ -133,7 +131,7 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             }
         }
     }
-            
+               
     public void integersToString(){    
         Integer mIS = new Integer(score);
         scoreS = mIS.toString();
@@ -166,20 +164,19 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
 
     public void Save(){
         try {
-        FileWriter fw = new FileWriter("Save.txt");
-        BufferedWriter bw = new BufferedWriter(fw);
+            FileWriter fw = new FileWriter("Save.txt");
+            BufferedWriter bw = new BufferedWriter(fw);
 
-        bw.write("" + score);       
-        String n = System.getProperty("line.separator");
-        bw.write(n);
-        bw.write("" + level);
+            bw.write("" + score);       
+            String n = System.getProperty("line.separator");
+            bw.write(n);
+            bw.write("" + level);
         
-        bw.close();
+            bw.close();
         } catch(IOException e) {
-         System.out.println("Error! Please check if you have permission to write data to your storage!");
+            System.out.println("Error! Please check if you have permission to write data to your storage!");
         }
     }
-    
     
     public void paint(Graphics g){
         super.paint(g);
@@ -366,7 +363,8 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             g.drawString(httxt, (BO_WI - metrs.stringWidth(httxt)) / 2, BO_HE - 50);
         }
         
-        if(state == PL || state == PA || state == WI || state == LO){
+        if(state == PL || state == PA || state == LO || state == WI){
+
             String playtxt;
             
             //ImageIcon pl_bgii = new ImageIcon(this.getClass().getResource(sampleimg));
@@ -405,40 +403,25 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             g.fillRect(BO_WI / 2 - 50, GROUND + 30, hp, 10);
             
             g.setColor(grayLight); 
-            
+
             drawBomb(g);
             drawViruses(g);
-            drawPlayer(g);
-            
-                    
-            if(hp == 0){
-                state = LO;
-            }
+            drawPlayer(g);            
            
             if(state == WI){
                 Save();
                 String wintxt;
-                ImageIcon pa_bgii = new ImageIcon(this.getClass().getResource(pa_bg));
-                g.drawImage(pa_bgii.getImage(), 0, 0, null);
-                g.setColor(grayLight);
-                g.setFont(big2);
-                wintxt = "WIN!";
-                g.drawString(wintxt, (BO_WI - metrb2.stringWidth(wintxt)) / 2, BO_HE / 2);
-                
-                g.setColor(gray);
-                g.setFont(small2);
-                wintxt = "Level: " + level;
-                g.drawString(wintxt, (BO_WI - metrs2.stringWidth(wintxt)) / 2, BO_HE / 2 +100);
-                wintxt = "Score: " + score;
-                g.drawString(wintxt, (BO_WI - metrs2.stringWidth(wintxt)) / 2, BO_HE / 2 +125);
             }
-            
+
+            if(hp == 0){state = LO;}
+
             if(state == PA){
                 String pausetxt;
                 ImageIcon pa_bgii = new ImageIcon(this.getClass().getResource(pa_bg));
                 g.drawImage(pa_bgii.getImage(), 0, 0, null);
                 g.setColor(grayLight);
                 g.setFont(big2);
+                
                 pausetxt = "PAUSE";
                 g.drawString(pausetxt, (BO_WI - metrb2.stringWidth(pausetxt)) / 2, BO_HE / 2);
                 
@@ -447,6 +430,26 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
                 pausetxt = "press ESC to return to the menu";
                 g.drawString(pausetxt, (BO_WI - metrs.stringWidth(pausetxt)) / 2, BO_HE / 2 +50);
             }
+                
+            if(state == WI){
+                String wintxt;
+                ImageIcon pa_bgii = new ImageIcon(this.getClass().getResource(pa_bg));
+                g.drawImage(pa_bgii.getImage(), 0, 0, null);
+                g.setColor(grayLight);
+                g.setFont(big2);
+                
+                wintxt = "WIN!";
+                g.drawString(wintxt, (BO_WI - metrb2.stringWidth(wintxt)) / 2, BO_HE / 2);
+                
+                g.setColor(gray);
+                g.setFont(small);
+                wintxt = "Level: " + level;
+                g.drawString(wintxt, (BO_WI - metrs2.stringWidth(wintxt)) / 2, BO_HE / 2 +50);
+                wintxt = "Score: " + score;
+                g.drawString(wintxt, (BO_WI - metrs2.stringWidth(wintxt)) / 2, BO_HE / 2 +150);
+                wintxt = "press ESC to return to the menu";
+                g.drawString(wintxt, (BO_WI - metrs.stringWidth(wintxt)) / 2, BO_HE / 2 +200);
+            }
             
             if(state == LO){
                 String losttxt;
@@ -454,7 +457,8 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
                 g.drawImage(pa_bgii.getImage(), 0, 0, null);
                 g.setColor(grayLight);
                 g.setFont(big2);
-                losttxt = "You loose the game...";
+                
+                losttxt = "You Loose";
                 g.drawString(losttxt, (BO_WI - metrb2.stringWidth(losttxt)) / 2, BO_HE / 2);
                 
                 g.setColor(gray);
@@ -467,7 +471,7 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
         Toolkit.getDefaultToolkit().sync();
         g.dispose();
     }
-    
+
     public void animationCycle(){
         //player
         
@@ -541,6 +545,7 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             
             if(shot == CHANCE && a.isVisible() && b.isDestroyed()) {
 
+
                 b.setDestroyed(false);
                 b.setX(a.getX());
                 b.setY(a.getY());
@@ -560,13 +565,19 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             
             if (!b.isDestroyed()) {
                 b.setY(b.getY() + 1);
-                if (b.getY() >= GROUND - BOMB_HE) {
-                    b.setDestroyed(true);
+                
+                if (!b.isDestroyed()) {
+                    
+                    b.setY(b.getY() + 1);
+                    if (b.getY() >= GROUND - BOMB_HE){
+                        
+                         b.setDestroyed(true);
+                    }
                 }
             }
         }
     }
-    
+        
     public void actionPerformed(ActionEvent e){
         repaint();
         if(state == PL){animationCycle();}
@@ -625,16 +636,9 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             }
         }
         
-        if (key == KeyEvent.VK_W){
-            state = WI;
-        }
-        
-        if (key == KeyEvent.VK_H){
-            readSaveFile();
-        }
-        
         if (key == KeyEvent.VK_ESCAPE){
             ESC = true;
+
             if(state == PA || state == WI || state == LO || state == OP || state == HT){
                 state = ME;
             }
@@ -662,7 +666,7 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
         
         if(key == KeyEvent.VK_SPACE){
             if(state == PL){
-                score += 10;   
+                score += 10;
                 level += 1;
                 if(hp < 100){hp += 10;}
             }
