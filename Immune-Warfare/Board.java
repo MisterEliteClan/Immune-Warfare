@@ -66,9 +66,11 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
         addKeyListener(this);
         setFocusable(true);
         setFocusTraversalKeysEnabled(false);
+        
         readSaveFile();
         writeSaveFile();
         init();
+        
         setDoubleBuffered(true);
     }
     
@@ -159,50 +161,50 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
     }
 
     public void readSaveFile(){
-         try {
-             if(csf == 0){
-             FileReader fr = new FileReader("Save" + csf +".txt");
-             BufferedReader br = new BufferedReader(fr);
-             saveFile1 = Boolean.parseBoolean(br.readLine());
-             saveFile2 = Boolean.parseBoolean(br.readLine());
-             saveFile3 = Boolean.parseBoolean(br.readLine());
-             System.out.println(saveFile1 + " " + saveFile2 + " " + saveFile3);
-             br.close();
+        try {
+            if(csf == 0){
+                FileReader fr = new FileReader("saveavailable.txt");
+                BufferedReader br = new BufferedReader(fr);
+                saveFile1 = Boolean.parseBoolean(br.readLine());
+                saveFile2 = Boolean.parseBoolean(br.readLine());
+                saveFile3 = Boolean.parseBoolean(br.readLine());
+                br.close();
             }
             else if(csf == 1){
-             FileReader fr = new FileReader("Save" + csf +".txt");
-             BufferedReader br = new BufferedReader(fr);
-             level = Integer.parseInt(br.readLine());
-             score = Integer.parseInt(br.readLine());
-             Username = br.readLine();
-             br.close();
+                FileReader fr = new FileReader("Save" + csf +".txt");
+                BufferedReader br = new BufferedReader(fr);
+                level = Integer.parseInt(br.readLine());
+                score = Integer.parseInt(br.readLine());
+                Username = br.readLine();
+                br.close();
             }
             else if(csf == 2){
-             FileReader fr = new FileReader("Save" + csf +".txt");
-             BufferedReader br = new BufferedReader(fr);
-             level = Integer.parseInt(br.readLine());
-             score = Integer.parseInt(br.readLine());
-             Username = br.readLine();
-             br.close();
+                 FileReader fr = new FileReader("Save" + csf +".txt");
+                 BufferedReader br = new BufferedReader(fr);
+                 level = Integer.parseInt(br.readLine());
+                 score = Integer.parseInt(br.readLine());
+                 Username = br.readLine();
+                 br.close();
             }
             else if(csf == 3){
-             FileReader fr = new FileReader("Save" + csf +".txt");
-             BufferedReader br = new BufferedReader(fr);
-             level = Integer.parseInt(br.readLine());
-             score = Integer.parseInt(br.readLine());
-             Username = br.readLine();
-             br.close();
+                FileReader fr = new FileReader("Save" + csf +".txt");
+                BufferedReader br = new BufferedReader(fr);
+                level = Integer.parseInt(br.readLine());
+                score = Integer.parseInt(br.readLine());
+                Username = br.readLine();
+                br.close();
             }
-         } catch(IOException e) {
+        }
+        catch(IOException e) {
              if(csf != 0){System.out.println("Error! Please check if you have permission to read data to your storage!");}
-         }
+        }
     }
 
     public void writeSaveFile(){
         try {
             String n = System.getProperty("line.separator");
             if(csf == 0){
-                FileWriter fw = new FileWriter("save"+ csf +".txt");
+                FileWriter fw = new FileWriter("saveavailable.txt");
                 BufferedWriter bw = new BufferedWriter(fw);
                 bw.write("" + saveFile1);       
                 bw.write(n);
@@ -221,7 +223,7 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
                 bw.write("" + Username);
                 bw.close();
                 saveFile1 = true;
-                FileWriter fw2 = new FileWriter("save0.txt");
+                FileWriter fw2 = new FileWriter("saveavailable.txt");
                 BufferedWriter bw2 = new BufferedWriter(fw2);
                 bw2.write("" + saveFile1);     
                 bw2.write(n);
@@ -240,7 +242,7 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
                 bw.write("" + Username);
                 bw.close();
                 saveFile2 = true;
-                FileWriter fw2 = new FileWriter("save0.txt");
+                FileWriter fw2 = new FileWriter("saveavailable.txt");
                 BufferedWriter bw2 = new BufferedWriter(fw2);
                 bw2.write("" + saveFile1);
                 bw2.write(n);
@@ -259,7 +261,7 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
                 bw.write("" + Username);
                 bw.close();
                 saveFile3 = true;
-                FileWriter fw2 = new FileWriter("save0.txt");
+                FileWriter fw2 = new FileWriter("saveavailable.txt");
                 BufferedWriter bw2 = new BufferedWriter(fw2);
                 bw2.write("" + saveFile1);    
                 bw2.write(n);
@@ -297,7 +299,7 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             int line = BO_HE / 2 - 100;
             if(saveFile1 == true){
                 try {
-                    FileReader fr = new FileReader("Save1.txt&quot");
+                    FileReader fr = new FileReader("Save1.txt");
                     BufferedReader br = new BufferedReader(fr);
                     cstxt = br.readLine();
                     cstxt = br.readLine();
@@ -316,7 +318,16 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             
             line += 100;
             if(saveFile2 == true){
-                cstxt = "Save avaible!";
+                try {
+                    FileReader fr = new FileReader("Save2.txt");
+                    BufferedReader br = new BufferedReader(fr);
+                    cstxt = br.readLine();
+                    cstxt = br.readLine();
+                    cstxt = br.readLine();
+                    br.close();
+                }
+                catch(IOException e) {
+                }
             }
             else{
                 cstxt = "No save avaible!";
@@ -327,7 +338,16 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             
             line += 100;
             if(saveFile3 == true){
-                cstxt = "Save avaible!";
+                try {
+                    FileReader fr = new FileReader("Save3.txt");
+                    BufferedReader br = new BufferedReader(fr);
+                    cstxt = br.readLine();
+                    cstxt = br.readLine();
+                    cstxt = br.readLine();
+                    br.close();
+                }
+                catch(IOException e) {
+                }
             }
             else{
                 cstxt = "No save avaible!";
@@ -335,6 +355,24 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             
             if(cspo == 3){g.setColor(grayLight);}else{g.setColor(gray);}
             g.drawString(cstxt, (BO_WI - metrb.stringWidth(cstxt)) / 2, line);
+            
+            if(state == YN){
+                String yntxt;
+                ImageIcon pa_bgii = new ImageIcon(this.getClass().getResource(pa_bg));
+                g.drawImage(pa_bgii.getImage(), 0, 0, null);
+                g.setColor(grayLight);
+                g.setFont(big2);
+                
+                yntxt = "Are you sure?";
+                g.drawString(yntxt, (BO_WI - metrb2.stringWidth(yntxt)) / 2, BO_HE / 2);
+                
+                g.setColor(gray);
+                g.setFont(small);
+                yntxt = "Press Enrer for: Yes";
+                g.drawString(yntxt, (BO_WI - metrs.stringWidth(yntxt)) / 2, BO_HE / 2 +50);
+                yntxt = "Press ESC for: NO";
+                g.drawString(yntxt, (BO_WI - metrs.stringWidth(yntxt)) / 2, BO_HE / 2 +75);
+            }
         }
 
         if(state == ME){
@@ -458,7 +496,7 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             String oppo1 = "Easy Mode";
             String oppo2 = "MLG X-Tr3m3 T3RR0R S3TT1NG5";
             String oppo3 = "M8";
-            String oppo4 = "J01N F4C3-CL4N";
+            String oppo4 = "Change your username";
             String oppo5 = "Kill yourself!";
             
             g.setColor(grayLight);
@@ -578,8 +616,7 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
                 g.drawString(pausetxt, (BO_WI - metrs.stringWidth(pausetxt)) / 2, BO_HE / 2 +50);
             }
                 
-            if(state == WI){
-                writeSaveFile();
+            if(state == WI){               
                 String wintxt;
                 ImageIcon pa_bgii = new ImageIcon(this.getClass().getResource(pa_bg));
                 g.drawImage(pa_bgii.getImage(), 0, 0, null);
@@ -591,12 +628,10 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
                 
                 g.setColor(gray);
                 g.setFont(small);
-                wintxt = "Level: " + level;
-                g.drawString(wintxt, (BO_WI - metrs.stringWidth(wintxt)) / 2, BO_HE / 2 +50);
                 wintxt = "Score: " + score;
-                g.drawString(wintxt, (BO_WI - metrs.stringWidth(wintxt)) / 2, BO_HE / 2 +150);
+                g.drawString(wintxt, (BO_WI - metrs.stringWidth(wintxt)) / 2, BO_HE / 2 +50);
                 wintxt = "press ESC to return to the menu";
-                g.drawString(wintxt, (BO_WI - metrs.stringWidth(wintxt)) / 2, BO_HE / 2 +200);
+                g.drawString(wintxt, (BO_WI - metrs.stringWidth(wintxt)) / 2, BO_HE / 2 +100);
             }
             
             if(state == LO){
@@ -615,7 +650,6 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
                 g.drawString(losttxt, (BO_WI - metrs.stringWidth(losttxt)) / 2, BO_HE / 2 +50);
             }
         }
-        
         Toolkit.getDefaultToolkit().sync();
         g.dispose();
     }
@@ -627,6 +661,8 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
         
         if(deaths == virusAmountY * virusAmountX){
             state = WI;
+            level++;
+            writeSaveFile();
         }
         
         //shot
@@ -653,6 +689,7 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
                             virus.setImage(ii.getImage());
                             virus.setDying(true);
                             deaths++;
+                            score += 10;
                             shot.die();
                     }
                 }
@@ -862,14 +899,15 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             if(state == PL){
                 if(hp > 0){hp -= 10;}
              }
+            if(state == YN){
+                state = CS;
+            }
         }
         
         if (key == KeyEvent.VK_ENTER){
             ENTER = true;
             if(state == ME && mepo == 1){
                 reset();
-                //readSaveFile();
-
                 state = PL;
             }
             if(state == ME && mepo == 3){
@@ -882,23 +920,61 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             if(state == ME && mepo == 5){
                 System.exit(0);
             }
+            
             if(state == OP && oppo == 4){
                 Username = JOptionPane.showInputDialog("Please enter your username:");
-                System.out.println(Username);
                 writeSaveFile();
             }
+            
             if(state == CS && cspo == 1){
                 csf = 1;
-                state = ME;
+                if(saveFile1 == true){
+                    state = ME;
+                }
+                else{
+                    Username = JOptionPane.showInputDialog("Please enter your username:");
+                    score = 0;
+                    level = 0;
+                    writeSaveFile();
+                    state = ME;
+                }
             }
             if(state == CS && cspo == 2){
                 csf = 2;
-                state = ME;
+                if(saveFile2 == true){
+                    state = ME;
+                }
+                else{
+                    Username = JOptionPane.showInputDialog("Please enter your username:");
+                    score = 0;
+                    level = 0;
+                    writeSaveFile();
+                    state = ME;
+                }
             }
             if(state == CS && cspo == 3){
                 csf = 3;
-                state = ME;
+                if(saveFile3 == true){
+                    state = ME;
+                }
+                else{
+                    Username = JOptionPane.showInputDialog("Please enter your username:");
+                    score = 0;
+                    level = 0;
+                    writeSaveFile();
+                    state = ME;
+                }
             }
+            
+            if(state == YN && cspo == 1){
+                saveFile1 = false;
+            }
+            if(state == YN && cspo == 2){
+                saveFile2 = false;
+            }  
+            if(state == YN && cspo == 3){
+                saveFile3 = false;
+            }  
         }    
         
         if(key == KeyEvent.VK_SPACE){
@@ -906,7 +982,27 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
                 if(!shot.isVisible()){
                     shot = new Shot(x, y);
                 }
-                level++;
+            }
+        }
+        
+        if(key == KeyEvent.VK_DELETE){
+            if(state == CS && cspo == 1){
+                csf = 1;
+                if(saveFile1 == true){
+                    state = YN;
+                }
+            }
+            if(state == CS && cspo == 2){
+                csf = 2;
+                if(saveFile2 == true){
+                    state = YN;
+                }
+            }
+            if(state == CS && cspo == 3){
+                csf = 3;
+                if(saveFile3 == true){
+                    state = YN;
+                }
             }
         }
     }
