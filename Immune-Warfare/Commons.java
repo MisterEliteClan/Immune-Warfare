@@ -51,7 +51,7 @@ public interface Commons{
     public static final int HT = 6; //how to play
     public static final int OP = 7; //options
     public static final int CS = 8; //Choose Savefile
-    public static final int YN = 8; //yes or no
+    public static final int YN = 9; //yes or no
     
     //colors
     Color grayDark = new Color (66, 66, 66);

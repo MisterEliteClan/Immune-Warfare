@@ -288,7 +288,7 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
         g.setColor(grayDark);
         g.fillRect(0, 0, d.width, d.height);
         
-        if(state == CS){
+        if(state == CS || state == YN){
             String cstxt = "";
             
             ImageIcon me_bgii = new ImageIcon(this.getClass().getResource(me_bg));
@@ -368,7 +368,7 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
                 
                 g.setColor(gray);
                 g.setFont(small);
-                yntxt = "Press Enrer for: Yes";
+                yntxt = "Press Enter for: Yes";
                 g.drawString(yntxt, (BO_WI - metrs.stringWidth(yntxt)) / 2, BO_HE / 2 +50);
                 yntxt = "Press ESC for: NO";
                 g.drawString(yntxt, (BO_WI - metrs.stringWidth(yntxt)) / 2, BO_HE / 2 +75);
@@ -650,6 +650,7 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
                 g.drawString(losttxt, (BO_WI - metrs.stringWidth(losttxt)) / 2, BO_HE / 2 +50);
             }
         }
+        
         Toolkit.getDefaultToolkit().sync();
         g.dispose();
     }
@@ -968,12 +969,15 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             
             if(state == YN && cspo == 1){
                 saveFile1 = false;
+                state = CS;
             }
             if(state == YN && cspo == 2){
                 saveFile2 = false;
+                state = CS;
             }  
             if(state == YN && cspo == 3){
                 saveFile3 = false;
+                state = CS;
             }  
         }    
         
