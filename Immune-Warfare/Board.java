@@ -93,6 +93,7 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
         level = 0;
         hp= 100;
         directionX = 1;
+        deaths = 0;
         init();
     }
     
@@ -568,7 +569,7 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
                 if(directionX == 0){
                     virus.actY(directionY);
                     dY2++;
-                    if(dY2 == virusAmountY * virusAmountX){
+                    if(dY2 == virusAmountY * virusAmountX - deaths){
                         dY += directionY;
                         dY2 = 0;
                     }
@@ -613,7 +614,6 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             if (!b.isDestroyed()) {
                 b.setY(b.getY() + 1);
                 if (!b.isDestroyed()) {
-                    
                     b.setY(b.getY() + 1);
                     if (b.getY() >= GROUND - BOMB_HE){
                          b.setDestroyed(true);
