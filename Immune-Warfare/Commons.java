@@ -28,14 +28,18 @@ public interface Commons{
     //bomb
     public static final int BOMB_WI = 32; //bomb width
     public static final int BOMB_HE = 32; //bomb height
-
+    
+    public static final int BOMB_SPACE_TOP = 17; //bomb space top
+    public static final int BOMB_SPACE_SIDE = 8; //bomb space side
+    
     public static final int CHANCE = 14; //chance of shot
     
     //shot
-    public static final int SH_WI = 1; //shot width
-    public static final int SH_HE = 3; //shot height
+    public static final int SH_WI = 32; //shot width
+    public static final int SH_HE = 32; //shot height
     
-    public static final String shot = "";
+    public static final int SH_SPACE_TOP = 13; //shot space top
+    public static final int SH_SPACE_SIDE = 13; //shot space side
     
     //gamestates
     public static final int PL = 0; //playing

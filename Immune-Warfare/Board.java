@@ -25,6 +25,7 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
     private Dimension d;
     private ArrayList viruses;
     private Player player;
+    private Shot shot;
     
     private int tmV = 15;
     Timer tm = new Timer(tmV,this);
@@ -82,6 +83,7 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
         }
         
         player = new Player();
+        shot = new Shot();
     }
     
     public void reset(){
@@ -116,6 +118,12 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
         if (player.isDying()) {
             player.die();
             state = LO;
+        }
+    }
+    
+    public void drawShot(Graphics g) {
+        if (shot.isVisible()){
+            g.drawImage(shot.getImage(), shot.getX(), shot.getY(), this);
         }
     }
     
@@ -388,14 +396,15 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             g.drawString(scoreS, 2, GROUND + 25 + 16);
 
             playtxt = "HP";
-            g.drawString(playtxt,(BO_WI - metrs2.stringWidth(playtxt)) / 2, GROUND + 5 + 16); 
-            g.fillRect(BO_WI / 2 - 52, GROUND + 30 - 2, 104, 14);
-            g.setColor(gray);
-            g.fillRect(BO_WI / 2 - 50, GROUND + 30, 100, 10);
+            g.drawString(playtxt,(BO_WI - metrs2.stringWidth(playtxt)) / 2, GROUND + 5 + 16);
             
             playtxt = "Upgrades";
             g.drawString(playtxt,BO_WI - metrs2.stringWidth(playtxt) - 8, GROUND + 5 + 16);
             
+            g.fillRect(BO_WI / 2 - 52, GROUND + 30 - 2, 104, 14);
+            g.setColor(gray);
+            g.fillRect(BO_WI / 2 - 50, GROUND + 30, 100, 10);
+
             if(hp >= 75){g.setColor(green);}
             else if(hp >= 50){g.setColor(yellow);}
             else if(hp >= 25){g.setColor(orange);}
@@ -406,6 +415,7 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
 
             drawBomb(g);
             drawViruses(g);
+            drawShot(g);
             drawPlayer(g);            
            
             if(state == WI){
@@ -476,6 +486,36 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
         //player
         
         player.act();
+        
+        //shot
+        
+        if(shot.isVisible()){
+            Iterator it = viruses.iterator();
+            int shotX = shot.getX();
+            int shotY = shot.getY();
+
+            while(it.hasNext()){
+                Virus virus = (Virus) it.next();
+                int virusX = virus.getX();
+                int virusY = virus.getY();
+
+                if(virus.isVisible() && shot.isVisible()){
+                    if (shotX >= (virusX) && shotX <= (virusX + VI_WI) && shotY >= (virusY) && shotY <= (virusY + VI_HE) ) {
+                            ImageIcon ii = new ImageIcon(getClass().getResource(virusImage));
+                            virus.setImage(ii.getImage());
+                            virus.setDying(true);
+                            deaths++;
+                            shot.die();
+                    }
+                }
+            }
+            
+            int y = shot.getY();
+            y -= 4;
+            if (y < TOP - SH_HE + SH_SPACE_TOP + 4)
+                shot.die();
+            else shot.setY(y);
+        }
          
         //virus
         
@@ -507,7 +547,6 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
                         directionX = 1;
                     }
                 }
-            
                 virusAmount = 0;
             }
         }
@@ -557,7 +596,7 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             int playerY = player.getY();
 
             if(player.isVisible() && !b.isDestroyed()) {
-                if(bombX >= (playerX-8-16) && bombX <= (playerX+PL_WI-8) && bombY+BOMB_HE >= (playerY+16) && bombY+BOMB_HE <= (playerY+PL_HE) ) {
+                if(bombX >= (playerX-BOMB_SPACE_SIDE-BOMB_WI/2) && bombX <= (playerX+PL_WI-BOMB_SPACE_SIDE) && bombY+BOMB_HE >= (playerY+BOMB_SPACE_TOP) && bombY+BOMB_HE <= (playerY+PL_HE) ) {
                         hp -= 10;
                         b.setDestroyed(true);;
                     }
@@ -666,9 +705,9 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
         
         if(key == KeyEvent.VK_SPACE){
             if(state == PL){
-                score += 10;
-                level += 1;
-                if(hp < 100){hp += 10;}
+                if(!shot.isVisible()){
+                    shot = new Shot(x, y);
+                }
             }
         }
     }
