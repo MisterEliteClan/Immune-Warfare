@@ -52,7 +52,7 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
     
     public static int state = CS;
     public static int mepo = 1;
-    public static int oppo = 1; 
+    public static int oppo = 1;
     public static int cspo = 1;
     
     private Thread animator;
@@ -202,71 +202,71 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
         try {
             String n = System.getProperty("line.separator");
             if(csf == 0){
-            FileWriter fw = new FileWriter("save"+ csf +".txt");
-            BufferedWriter bw = new BufferedWriter(fw);
-            bw.write("" + saveFile1);       
-            bw.write(n);
-            bw.write("" + saveFile2);
-            bw.write(n);
-            bw.write("" + saveFile3);
-            bw.close();
+                FileWriter fw = new FileWriter("save"+ csf +".txt");
+                BufferedWriter bw = new BufferedWriter(fw);
+                bw.write("" + saveFile1);       
+                bw.write(n);
+                bw.write("" + saveFile2);
+                bw.write(n);
+                bw.write("" + saveFile3);
+                bw.close();
             }
-            else if(csf == 1){
-            FileWriter fw = new FileWriter("save"+ csf +".txt");
-            BufferedWriter bw = new BufferedWriter(fw);
-            bw.write("" + level);       
-            bw.write(n);
-            bw.write("" + score);
-            bw.write(n);
-            bw.write("" + Username);
-            bw.close();
-            saveFile1 = true;
-            FileWriter fw2 = new FileWriter("save0.txt");
-            BufferedWriter bw2 = new BufferedWriter(fw2);
-            bw2.write("" + saveFile1);     
-            bw2.write(n);
-            bw2.write("" + saveFile2);
-            bw2.write(n);
-            bw2.write("" + saveFile3);
-            bw2.close();
+            if(csf == 1){
+                FileWriter fw = new FileWriter("save"+ csf +".txt");
+                BufferedWriter bw = new BufferedWriter(fw);
+                bw.write("" + level);       
+                bw.write(n);
+                bw.write("" + score);
+                bw.write(n);
+                bw.write("" + Username);
+                bw.close();
+                saveFile1 = true;
+                FileWriter fw2 = new FileWriter("save0.txt");
+                BufferedWriter bw2 = new BufferedWriter(fw2);
+                bw2.write("" + saveFile1);     
+                bw2.write(n);
+                bw2.write("" + saveFile2);
+                bw2.write(n);
+                bw2.write("" + saveFile3);
+                bw2.close();
             }
-            else if(csf == 2){
-            FileWriter fw = new FileWriter("save"+ csf +".txt");
-            BufferedWriter bw = new BufferedWriter(fw);
-            bw.write("" + level);       
-            bw.write(n);
-            bw.write("" + score);
-            bw.write(n);
-            bw.write("" + Username);
-            bw.close();
-            saveFile2 = true;
-            FileWriter fw2 = new FileWriter("save0.txt");
-            BufferedWriter bw2 = new BufferedWriter(fw2);
-            bw2.write("" + saveFile1);
-            bw2.write(n);
-            bw2.write("" + saveFile2);
-            bw2.write(n);
-            bw2.write("" + saveFile3);
-            bw2.close();
+            if(csf == 2){
+                FileWriter fw = new FileWriter("save"+ csf +".txt");
+                BufferedWriter bw = new BufferedWriter(fw);
+                bw.write("" + level);       
+                bw.write(n);
+                bw.write("" + score);
+                bw.write(n);
+                bw.write("" + Username);
+                bw.close();
+                saveFile2 = true;
+                FileWriter fw2 = new FileWriter("save0.txt");
+                BufferedWriter bw2 = new BufferedWriter(fw2);
+                bw2.write("" + saveFile1);
+                bw2.write(n);
+                bw2.write("" + saveFile2);
+                bw2.write(n);
+                bw2.write("" + saveFile3);
+                bw2.close();
             }
-            else if(csf == 3){
-            FileWriter fw = new FileWriter("save"+ csf +".txt");
-            BufferedWriter bw = new BufferedWriter(fw);
-            bw.write("" + level);       
-            bw.write(n);
-            bw.write("" + score);
-            bw.write(n);
-            bw.write("" + Username);
-            bw.close();
-            saveFile3 = true;
-            FileWriter fw2 = new FileWriter("save0.txt");
-            BufferedWriter bw2 = new BufferedWriter(fw2);
-            bw2.write("" + saveFile1);    
-            bw2.write(n);
-            bw2.write("" + saveFile2);
-            bw2.write(n);
-            bw2.write("" + saveFile3);
-            bw2.close();
+            if(csf == 3){
+                FileWriter fw = new FileWriter("save"+ csf +".txt");
+                BufferedWriter bw = new BufferedWriter(fw);
+                bw.write("" + level);       
+                bw.write(n);
+                bw.write("" + score);
+                bw.write(n);
+                bw.write("" + Username);
+                bw.close();
+                saveFile3 = true;
+                FileWriter fw2 = new FileWriter("save0.txt");
+                BufferedWriter bw2 = new BufferedWriter(fw2);
+                bw2.write("" + saveFile1);    
+                bw2.write(n);
+                bw2.write("" + saveFile2);
+                bw2.write(n);
+                bw2.write("" + saveFile3);
+                bw2.close();
             }
         } catch(IOException e) {
             System.out.println("Error! Please check if you have permission to write data to your storage!");
@@ -287,34 +287,52 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
         g.fillRect(0, 0, d.width, d.height);
         
         if(state == CS){
-            String cstxt;
+            String cstxt = "";
+            
+            ImageIcon me_bgii = new ImageIcon(this.getClass().getResource(me_bg));
+            g.drawImage(me_bgii.getImage(), 0, 0, null);
+            
+            g.setFont(big);
             
             int line = BO_HE / 2 - 100;
             if(saveFile1 == true){
-            cstxt = "Save avaible!";
-            }else{
-            cstxt = "No save avaible!";
+                try {
+                    FileReader fr = new FileReader("Save1.txt&quot");
+                    BufferedReader br = new BufferedReader(fr);
+                    cstxt = br.readLine();
+                    cstxt = br.readLine();
+                    cstxt = br.readLine();
+                    br.close();
+                }
+                catch(IOException e) {
+                }
             }
-            g.setFont(big);
+            else{              
+                cstxt = "No save avaible!";
+            }
+            
             if(cspo == 1){g.setColor(grayLight);}else{g.setColor(gray);}
             g.drawString(cstxt, (BO_WI - metrb.stringWidth(cstxt)) / 2, line);
             
             line += 100;
             if(saveFile2 == true){
-            cstxt = "Save avaible!";
-            }else{
-            cstxt = "No save avaible!";
+                cstxt = "Save avaible!";
             }
-            g.setFont(big);
+            else{
+                cstxt = "No save avaible!";
+            }
+            
             if(cspo == 2){g.setColor(grayLight);}else{g.setColor(gray);}
             g.drawString(cstxt, (BO_WI - metrb.stringWidth(cstxt)) / 2, line);
+            
             line += 100;
             if(saveFile3 == true){
-            cstxt = "Save avaible!";
-            }else{
-            cstxt = "No save avaible!";
+                cstxt = "Save avaible!";
             }
-            g.setFont(big);
+            else{
+                cstxt = "No save avaible!";
+            }
+            
             if(cspo == 3){g.setColor(grayLight);}else{g.setColor(gray);}
             g.drawString(cstxt, (BO_WI - metrb.stringWidth(cstxt)) / 2, line);
         }
@@ -443,8 +461,6 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             String oppo4 = "J01N F4C3-CL4N";
             String oppo5 = "Kill yourself!";
             
-            
-           
             g.setColor(grayLight);
             g.setFont(big2);
             optionstxt = "Options";
@@ -499,7 +515,6 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
         }
         
         if(state == PL || state == PA || state == LO || state == WI){
-
             String playtxt;
             
             //ImageIcon pl_bgii = new ImageIcon(this.getClass().getResource(sampleimg));
@@ -840,7 +855,6 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
         
         if (key == KeyEvent.VK_ESCAPE){
             ESC = true;
-
             if(state == PA || state == WI || state == LO || state == OP || state == HT){
                 state = ME;
                 oppo = 1;
@@ -870,7 +884,7 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             }
             if(state == OP && oppo == 4){
                 Username = JOptionPane.showInputDialog("Please enter your username:");
-                System.out.println(Username); 
+                System.out.println(Username);
                 writeSaveFile();
             }
             if(state == CS && cspo == 1){
