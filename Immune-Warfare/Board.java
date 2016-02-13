@@ -27,12 +27,12 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
     private Player player;
     private Shot shot;
     
-    private int tmV = 15;
+    private int tmV = 20;
     Timer tm = new Timer(tmV,this);
     
     public static boolean SPACE, UP, DOWN, LEFT, RIGHT, keyP, ESC, ENTER;
     
-    public static int score,level,hp;
+    public static int score,hp;
     public static String scoreS,levelS,hpS,scoreSave,levelSave, Username;
     
     private boolean saveFile1 = false,saveFile2 = false,saveFile3 = false;
@@ -54,6 +54,8 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
     public static int mepo = 1;
     public static int oppo = 1;
     public static int cspo = 1;
+    
+    public static int level = 1;
     
     private Thread animator;
     
@@ -97,12 +99,12 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
     }
     
     public void reset(){
-        score = 0;
-        level = 1;
         hp= 100;
         directionX = 1;
         deaths = 0;
-        init();
+        virusAmountX = 3 * level / 2;
+        virusAmountY = 2 * level / 2;
+        init(); 
     }
     
     public void drawViruses(Graphics g){
@@ -385,6 +387,21 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             
             ImageIcon me_bgii = new ImageIcon(this.getClass().getResource(me_bg));
             g.drawImage(me_bgii.getImage(), 0, 0, null);
+            
+            g.setColor(grayLight);
+            g.setFont(small2);
+            
+            menutxt = "User: ";
+            g.drawString(menutxt, 5, BO_HE / 2 -175);
+            
+            menutxt = Username;
+            g.drawString(menutxt, 5, BO_HE / 2 -150);
+            
+            menutxt = "Score: " + score;
+            g.drawString(menutxt, (BO_WI - metrs2.stringWidth(menutxt)) / 2, BO_HE / 2 -175);
+            
+            menutxt = "Level: " + level;
+            g.drawString(menutxt, (BO_WI - metrs2.stringWidth(menutxt)) / 2, BO_HE / 2 -150);
             
             if(UP == true){g.setColor(grayLight);}
             else{g.setColor(grayDark);}
@@ -751,8 +768,6 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
                     }
                 }
             }
-            
-            System.out.println("dY: " + dY + ", dY2: " + dY2);
         }
         
         //Bombs
@@ -838,9 +853,6 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
                     oppo = 5;
                 }
             }
-            if(state == PL){
-                if(hp > 0){hp -= 10;}
-            }
         }
 
         if (key == KeyEvent.VK_DOWN){
@@ -893,13 +905,15 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
         
         if (key == KeyEvent.VK_ESCAPE){
             ESC = true;
-            if(state == PA || state == WI || state == LO || state == OP || state == HT){
+            if(state == PA || state == WI || state == OP || state == HT){
                 state = ME;
                 oppo = 1;
             }
-            if(state == PL){
-                if(hp > 0){hp -= 10;}
-             }
+            if(state == LO){
+                state = ME;
+                oppo = 1;
+                readSaveFile();
+            }
             if(state == YN){
                 state = CS;
             }
@@ -930,6 +944,7 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             if(state == CS && cspo == 1){
                 csf = 1;
                 if(saveFile1 == true){
+                    readSaveFile();
                     state = ME;
                 }
                 else{
@@ -943,6 +958,7 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             if(state == CS && cspo == 2){
                 csf = 2;
                 if(saveFile2 == true){
+                    readSaveFile();
                     state = ME;
                 }
                 else{
@@ -956,6 +972,7 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             if(state == CS && cspo == 3){
                 csf = 3;
                 if(saveFile3 == true){
+                    readSaveFile();
                     state = ME;
                 }
                 else{
