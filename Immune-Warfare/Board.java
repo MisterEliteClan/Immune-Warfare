@@ -698,5 +698,4 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             SPACE = false;
         }
     }
-    
 }
