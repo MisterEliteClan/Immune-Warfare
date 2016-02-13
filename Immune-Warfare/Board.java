@@ -572,7 +572,7 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
                 if(directionX == 0){
                     virus.actY(directionY);
                     dY2++;
-                    if(dY2 == virusAmountY * virusAmountX - deaths){
+                    if(dY2 >= virusAmountY * virusAmountX - deaths){
                         dY += directionY;
                         dY2 = 0;
                     }
