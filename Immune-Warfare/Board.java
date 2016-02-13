@@ -65,6 +65,7 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
         
         tm.start();
         
+        
         addKeyListener(this);
         setFocusable(true);
         setFocusTraversalKeysEnabled(false);
@@ -99,12 +100,13 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
     }
     
     public void reset(){
+        tm.setDelay(tmV);
         hp= 100;
         directionX = 1;
         deaths = 0;
         virusAmountX = 3 * level / 2;
         virusAmountY = 2 * level / 2;
-        init(); 
+        init();
     }
     
     public void drawViruses(Graphics g){
@@ -510,11 +512,25 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
         
         if(state == OP){
             String optionstxt = "";
-            String oppo1 = "Easy Mode";
-            String oppo2 = "MLG X-Tr3m3 T3RR0R S3TT1NG5";
-            String oppo3 = "M8";
-            String oppo4 = "Change your username";
-            String oppo5 = "Kill yourself!";
+            String tmVtxt = "";
+            String oppo1 = "change your username";
+            if(tmV <= 25){
+                tmVtxt = "...s...l...o...w...";
+            }
+            if(tmV <= 20){
+                tmVtxt = "slow";
+            }
+            if(tmV <= 15){
+                tmVtxt = "medum";
+            }
+            if(tmV <= 10){
+                tmVtxt = "fast!";
+            }
+            if(tmV <= 5){
+                tmVtxt = "FAST!!!";
+            }
+            String oppo2 = "Runtime: " + tmV + " (" + tmVtxt + ")";
+            String oppo3 = "Reset all";
             
             g.setColor(grayLight);
             g.setFont(big2);
@@ -527,11 +543,9 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             g.setFont(middle2);
             g.drawString(optionstxt, (BO_WI - metrm2.stringWidth(optionstxt)) / 2, BO_HE / 2 -100);
             
-            if(oppo == 1){optionstxt = oppo5;}
+            if(oppo == 1){optionstxt = oppo3;}
             else if(oppo == 2){optionstxt = oppo1;}
             else if(oppo == 3){optionstxt = oppo2;}
-            else if(oppo == 4){optionstxt = oppo3;}
-            else if(oppo == 5){optionstxt = oppo4;}
             g.setColor(gray);
             g.setFont(middle);
             g.drawString(optionstxt, (BO_WI - metrm.stringWidth(optionstxt)) / 2, BO_HE / 2 -50);
@@ -539,17 +553,13 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             if(oppo == 1){optionstxt = ">  " + oppo1 + "  <";}
             else if(oppo == 2){optionstxt = ">  " + oppo2 + "  <";}
             else if(oppo == 3){optionstxt = ">  " + oppo3 + "  <";}
-            else if(oppo == 4){optionstxt = ">  " + oppo4 + "  <";}
-            else if(oppo == 5){optionstxt = ">  " + oppo5 + "  <";}
             g.setColor(grayLight);
             g.setFont(middle2);
             g.drawString(optionstxt, (BO_WI - metrm2.stringWidth(optionstxt)) / 2, BO_HE / 2);
             
             if(oppo == 1){optionstxt = oppo2;}
             else if(oppo == 2){optionstxt = oppo3;}
-            else if(oppo == 3){optionstxt = oppo4;}
-            else if(oppo == 4){optionstxt = oppo5;}
-            else if(oppo == 5){optionstxt = oppo1;}
+            else if(oppo == 3){optionstxt = oppo1;}
             g.setColor(gray);
             g.setFont(middle);
             g.drawString(optionstxt, (BO_WI - metrm.stringWidth(optionstxt)) / 2, BO_HE / 2 + 50);
@@ -850,7 +860,7 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             if(state == OP){
                 oppo--;
                 if(oppo == 0){
-                    oppo = 5;
+                    oppo = 3;
                 }
             }
         }
@@ -921,6 +931,16 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
         
         if (key == KeyEvent.VK_ENTER){
             ENTER = true;
+            
+            if(state == OP && oppo == 2){
+                tmV++;
+                if(tmV >= 26){tmV = 1;}
+            }
+            if(state == OP && oppo == 1){
+                Username = JOptionPane.showInputDialog("Please enter your username:");
+                writeSaveFile();
+            }
+            
             if(state == ME && mepo == 1){
                 reset();
                 state = PL;
@@ -936,11 +956,6 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
                 System.exit(0);
             }
             
-            if(state == OP && oppo == 4){
-                Username = JOptionPane.showInputDialog("Please enter your username:");
-                writeSaveFile();
-            }
-            
             if(state == CS && cspo == 1){
                 csf = 1;
                 if(saveFile1 == true){
@@ -950,7 +965,7 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
                 else{
                     Username = JOptionPane.showInputDialog("Please enter your username:");
                     score = 0;
-                    level = 0;
+                    level = 1;
                     writeSaveFile();
                     state = ME;
                 }
@@ -964,7 +979,7 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
                 else{
                     Username = JOptionPane.showInputDialog("Please enter your username:");
                     score = 0;
-                    level = 0;
+                    level = 1;
                     writeSaveFile();
                     state = ME;
                 }
@@ -978,7 +993,7 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
                 else{
                     Username = JOptionPane.showInputDialog("Please enter your username:");
                     score = 0;
-                    level = 0;
+                    level = 1;
                     writeSaveFile();
                     state = ME;
                 }
