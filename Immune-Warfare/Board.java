@@ -23,16 +23,17 @@ import java.io.*;
 public class Board extends JPanel implements KeyListener, ActionListener, Commons {
 
     private Dimension d;
-    private ArrayList viruses;
+    private ArrayList viruses, shots;
     private Player player;
-    private Shot shot;
     
     private int tmV = 15;
     Timer tm = new Timer(tmV,this);
     
-    public static boolean SPACE, UP, DOWN, LEFT, RIGHT, keyP, ESC, ENTER, keyY, keyN;
+    private int allowTime = 50;
     
-    public static int score,hp;
+    public static boolean SPACE, UP, DOWN, LEFT, RIGHT, keyP, ESC, ENTER, keyY, keyN, allow;
+    
+    public static int score, hp, shotA;
     public static String scoreS,levelS,hpS,scoreSave,levelSave, Username;
     
     private boolean saveFile1 = false,saveFile2 = false,saveFile3 = false;
@@ -96,7 +97,18 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
         }
         
         player = new Player();
-        shot = new Shot();
+        
+        shots = new ArrayList();
+    }
+    
+    public void newShot(){
+        int x = player.getX();
+        int y = player.getY();
+        
+        Shot shot = new Shot(x, y);
+        shots.add(shot);
+        
+        Iterator its = shots.iterator();
     }
     
     public void resetAll(){
@@ -110,8 +122,8 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
         hp= 100;
         directionX = 1;
         deaths = 0;
-        virusAmountX = 3 * (level + 3) / 4;
-        virusAmountY = 2 * (level + 3) / 4;
+        virusAmountX = 3 * (level + 8) / 10;
+        virusAmountY = 2 * (level + 8) / 10;
         init();
     }
     
@@ -143,8 +155,17 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
     }
     
     public void drawShot(Graphics g) {
-        if (shot.isVisible()){
-            g.drawImage(shot.getImage(), shot.getX(), shot.getY(), this);
+        Iterator it = shots.iterator();
+
+        while (it.hasNext()) {
+            Shot shot = (Shot) it.next();            
+            
+            if (shot.isVisible()){
+                g.drawImage(shot.getImage(), shot.getX(), shot.getY(), this);
+            }
+            if (shot.isDying()) {
+                shot.die();
+            }
         }
     }
     
@@ -549,7 +570,7 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
                 tmVtxt = "slow";
             }
             if(tmV <= 15){
-                tmVtxt = "medum";
+                tmVtxt = "medium";
             }
             if(tmV <= 10){
                 tmVtxt = "fast!";
@@ -742,42 +763,62 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
         
         if(score < 0){score = 0;}
         
-        //shot
+        if(shotA >= 0){
+            shotA --;
+        }
+        if(shotA <= 0){
+            allow = true;
+        }
+        else{
+            allow = false;
+        }
         
-        if(shot.isVisible()){
-            Iterator it = viruses.iterator();
-            int shotX = shot.getX() + SH_WI / 2;
-            int shotY = shot.getY() + SH_HE / 2;
+        System.out.println("Delay: " + tm.getDelay() + " | shotA: " + shotA + " | allow: " + allow);
+        
+        //shot
+        Iterator its = shots.iterator();
+     
+        while(its.hasNext()){
+            Shot shot = (Shot) its.next();
+            
+            if(shot.isVisible()){
+                Iterator it = viruses.iterator();
+            
+                int shotX = shot.getX() + SH_WI / 2;
+                int shotY = shot.getY() + SH_HE / 2;
 
-            while(it.hasNext()){
-                Virus virus = (Virus) it.next();
-                int virusX = virus.getX() + VI_WI / 2;
-                int virusY = virus.getY() + VI_HE / 2;
+                while(it.hasNext()){
+                    Virus virus = (Virus) it.next();
+                    int virusX = virus.getX() + VI_WI / 2;
+                    int virusY = virus.getY() + VI_HE / 2;
 
-                if(virus.isVisible() && shot.isVisible()){
+                    if(virus.isVisible() && shot.isVisible()){
                     
-                    //virus hitbox
+                        //virus hitbox
                     
-                    if (shotX + SH_SPACE_SIDE >= virusX 
-                    && shotX - SH_SPACE_SIDE <= virusX 
-                    && shotY + SH_HE / 2 + SH_SPACE_TOP >= virusY 
-                    && shotY <= virusY){
+                        if (shotX + SH_SPACE_SIDE >= virusX 
+                        && shotX - SH_SPACE_SIDE <= virusX 
+                        && shotY + SH_HE / 2 + SH_SPACE_TOP >= virusY 
+                        && shotY <= virusY){
                             ImageIcon ii = new ImageIcon(getClass().getResource(virusImage));
                             virus.setImage(ii.getImage());
                             virus.setDying(true);
                             deaths++;
                             score += 100;
                             shot.die();
+                        }
                     }
                 }
-            }
             
-            int y = shot.getY();
-            y -= 4;
-            if (y < TOP - SH_HE + SH_SPACE_TOP + 4)
-                shot.die();
-            else shot.setY(y);
+                int y = shot.getY();
+                y -= 4;
+                if (y < TOP - SH_HE + SH_SPACE_TOP + 4){
+                    shot.die();
+                }
+                else shot.setY(y);
+            }
         }
+        
         
         //virus
         
@@ -1094,8 +1135,9 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
         
         if(key == KeyEvent.VK_SPACE){
             if(state == PL){
-                if(!shot.isVisible()){
-                    shot = new Shot(x, y);
+                if(allow == true){
+                    newShot();
+                    shotA = allowTime;
                 }
             }
         }

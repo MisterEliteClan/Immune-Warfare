@@ -32,7 +32,7 @@ public interface Commons{
     public static final int BOMB_SPACE_TOP = 17; //bomb space top
     public static final int BOMB_SPACE_SIDE = 8; //bomb space side
     
-    public static final int CHANCE = 14; //chance of shot
+    public static final int CHANCE = 10; //chance of shot
     
     //shot
     public static final int SH_WI = 32; //shot width

@@ -4,8 +4,8 @@ public class Shot extends Sprite{
 
     private String shot = "/img/shot and bomb/shot.png";
 
-    public Shot() {
-    }
+    //public Shot() {
+    //}
 
     public Shot(int x, int y) {
         ImageIcon ii = new ImageIcon(this.getClass().getResource(shot));
