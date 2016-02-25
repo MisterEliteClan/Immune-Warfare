@@ -53,6 +53,8 @@ public interface Commons{
     public static final int CS = 8; //Choose Savefile
     public static final int YNCS = 9; //yes or no for save choose
     public static final int YNOP = 10; //yes or no for options
+    public static final int US = 11; //Upgradeshop
+    public static final int YNUS = 12; //yes or no for Upgradeshop
     
     //colors
     Color grayDark = new Color (66, 66, 66);
@@ -74,6 +76,13 @@ public interface Commons{
     public static final String playerahhImage = "/img/player/player1ahh.png";
     public static final String playerahhlImage = "/img/player/player1ahhl.png";
     public static final String playerahhrImage = "/img/player/player1ahhr.png";
+    
+    public static final String playerosImage = "/img/player/player1os.png";
+    public static final String playerlosImage = "/img/player/player1los.png";
+    public static final String playerrosImage = "/img/player/player1ros.png";
+    public static final String playerahhosImage = "/img/player/player1ahhos.png";
+    public static final String playerahhlosImage = "/img/player/player1ahhlos.png";
+    public static final String playerahhrosImage = "/img/player/player1ahhros.png";
     
     public static final String shotImage = "/img/shot and bomb/shot.png";
     

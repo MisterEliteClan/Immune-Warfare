@@ -7,7 +7,7 @@ public class Player extends Sprite implements Commons{
     private final int ST_X = BO_WI / 2 - 16;
     private final int ST_Y = GROUND - 32;
     
-    private boolean SPACE, LEFT, RIGHT;
+    private boolean SPACE, LEFT, RIGHT, allow;
         
     private int width;
     
@@ -18,12 +18,21 @@ public class Player extends Sprite implements Commons{
     ImageIcon iiahhl = new ImageIcon(this.getClass().getResource(playerahhlImage));
     ImageIcon iiahhr = new ImageIcon(this.getClass().getResource(playerahhrImage));
     
+    ImageIcon iios = new ImageIcon(this.getClass().getResource(playerosImage));
+    ImageIcon iilos = new ImageIcon(this.getClass().getResource(playerlosImage));
+    ImageIcon iiros = new ImageIcon(this.getClass().getResource(playerrosImage));
+    ImageIcon iiahhos = new ImageIcon(this.getClass().getResource(playerahhosImage));
+    ImageIcon iiahhlos = new ImageIcon(this.getClass().getResource(playerahhlosImage));
+    ImageIcon iiahhros = new ImageIcon(this.getClass().getResource(playerahhrosImage));
+    
     public Player(){
         setX(ST_X);
         setY(ST_Y);
     }
     
     public void act(){
+        allow = Board.allow;
+        
         width = ii.getImage().getWidth(null);
 
         x += + dxl + dxr;
@@ -32,21 +41,51 @@ public class Player extends Sprite implements Commons{
         if(x >= BO_WI - width - 8){x = BO_WI - width - 8;}
         
         if(dxl == 0 && dxr == 0){
-            setImage(ii.getImage());
+            if(allow == false){
+                setImage(iios.getImage());
+            }
+            else{
+                setImage(ii.getImage());
+            }
             if(SPACE == true){
-                setImage(iiahh.getImage());
+                if(allow == false){
+                    setImage(iiahhos.getImage());
+                }
+                else{
+                    setImage(iiahh.getImage());
+                }
             }
         }
         if(dxl == -2 && dxr == 0){
-            setImage(iil.getImage());
+            if(allow == false){
+                setImage(iilos.getImage());
+            }
+            else{
+                setImage(iil.getImage());
+            }
             if(SPACE == true){
-                setImage(iiahhl.getImage());
+                if(allow == false){
+                    setImage(iiahhlos.getImage());
+                }
+                else{
+                    setImage(iiahhl.getImage());
+                }
             }
         }
         if((dxl == 0 && dxr == 2)){
-            setImage(iir.getImage());
+            if(allow == false){
+                setImage(iiros.getImage());
+            }
+            else{
+                setImage(iir.getImage());
+            }
             if(SPACE == true){
-                setImage(iiahhr.getImage());
+                if(allow == false){
+                    setImage(iiahhros.getImage());
+                }
+                else{
+                    setImage(iiahhr.getImage());
+                }
             }
         }
         
