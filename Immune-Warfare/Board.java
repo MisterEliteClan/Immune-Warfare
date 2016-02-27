@@ -45,6 +45,10 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
     private int directionX = 1;
     private int directionY = 1;
     
+    private int rapidfire = 1;
+    private boolean triple = false;
+    private int nuke = 0;
+    
     //placeholder
     private int dY, dY2;
     private int csf;
@@ -55,6 +59,7 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
     public static int mepo = 1;
     public static int oppo = 1;
     public static int cspo = 1;
+    public static int uspo = 1;
     
     public static int level = 1;
     
@@ -83,6 +88,7 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
         init();
     }
     
+    
     public void init(){
         viruses = new ArrayList();
         
@@ -105,8 +111,18 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
         int x = player.getX();
         int y = player.getY();
         
-        Shot shot = new Shot(x, y);
-        shots.add(shot);
+        if(triple == true){
+            Shot shot = new Shot(x, y);
+            shots.add(shot);
+            Shot shotl = new Shot(x - 10, y);
+            shots.add(shotl);
+            Shot shotr = new Shot(x + 10, y);
+            shots.add(shotr);
+        }
+        else{
+            Shot shot = new Shot(x, y);
+            shots.add(shot);
+        }
         
         Iterator its = shots.iterator();
     }
@@ -646,6 +662,82 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             }
         }
         
+        if (state == US || state == YNUS){
+            
+            ImageIcon me_bgii = new ImageIcon(this.getClass().getResource(me_bg));
+            g.drawImage(me_bgii.getImage(), 0, 0, null);
+            
+            String upgradeshoptxt = "";
+            
+            String uspo1 = "Tripleshot";
+            String uspo2 = "Rapidfire";
+            String uspo3 = "NUKE!!!";
+            
+            g.setColor(grayLight);
+            g.setFont(big2);
+            upgradeshoptxt = "Options";
+            g.drawString(upgradeshoptxt, (BO_WI - metrb2.stringWidth(upgradeshoptxt)) / 2, BO_HE/2 -150);
+            
+            if(UP == true){g.setColor(grayLight);}
+            else{g.setColor(grayDark);}
+            upgradeshoptxt = "Λ";
+            g.setFont(big2);
+            g.drawString(upgradeshoptxt, (BO_WI - metrb2.stringWidth(upgradeshoptxt)) / 2, BO_HE / 2 -100);
+            
+            if(uspo == 1){upgradeshoptxt = uspo3;}
+            else if(uspo == 2){upgradeshoptxt = uspo1;}
+            else if(uspo == 3){upgradeshoptxt = uspo2;}
+            g.setColor(gray);
+            g.setFont(middle2);
+            g.drawString(upgradeshoptxt, (BO_WI - metrm2.stringWidth(upgradeshoptxt)) / 2, BO_HE / 2 -50);
+            
+            if(uspo == 1){upgradeshoptxt = ">  " + uspo1 + "  <";}
+            else if(uspo == 2){upgradeshoptxt = ">  " + uspo2 + "  <";}
+            else if(uspo == 3){upgradeshoptxt = ">  " + uspo3 + "  <";}
+            g.setColor(grayLight);
+            g.setFont(middle);
+            g.drawString(upgradeshoptxt, (BO_WI - metrm.stringWidth(upgradeshoptxt)) / 2, BO_HE / 2);
+            
+            if(uspo == 1){upgradeshoptxt = uspo2;}
+            else if(uspo == 2){upgradeshoptxt = uspo3;}
+            else if(uspo == 3){upgradeshoptxt = uspo1;}
+            g.setColor(gray);
+            g.setFont(middle2);
+            g.drawString(upgradeshoptxt, (BO_WI - metrm2.stringWidth(upgradeshoptxt)) / 2, BO_HE / 2 + 50);
+            
+            if(DOWN == true){g.setColor(grayLight);}
+            else{g.setColor(grayDark);}
+            upgradeshoptxt = "V";
+            g.setFont(big2);
+            g.drawString(upgradeshoptxt, (BO_WI - metrb2.stringWidth(upgradeshoptxt)) / 2, BO_HE / 2 + 100);
+                
+            upgradeshoptxt = "Press ENTER to choose";
+            g.setColor(gray);
+            g.setFont(small2);
+            g.drawString(upgradeshoptxt, (BO_WI - metrs2.stringWidth(upgradeshoptxt)) / 2, BO_HE / 2 + 150);
+            
+            upgradeshoptxt = "press ESC to return to the menu";
+            g.drawString(upgradeshoptxt, (BO_WI - metrs2.stringWidth(upgradeshoptxt)) / 2, BO_HE - 50);
+            
+            if(state == YNUS){
+                String yntxt;
+                ImageIcon pa_bgii = new ImageIcon(this.getClass().getResource(pa_bg));
+                g.drawImage(pa_bgii.getImage(), 0, 0, null);
+                g.setColor(grayLight);
+                g.setFont(big2);
+                
+                yntxt = "Are you sure?";
+                g.drawString(yntxt, (BO_WI - metrb2.stringWidth(yntxt)) / 2, BO_HE / 2);
+                
+                g.setColor(gray);
+                g.setFont(small);
+                yntxt = "Press [Y] for: Yes";
+                g.drawString(yntxt, (BO_WI - metrs.stringWidth(yntxt)) / 2, BO_HE / 2 +50);
+                yntxt = "Press [N] for: NO";
+                g.drawString(yntxt, (BO_WI - metrs.stringWidth(yntxt)) / 2, BO_HE / 2 +75);
+            }
+        }
+        
         if(state == PL || state == PA || state == LO || state == WI){
             String playtxt;
             
@@ -754,7 +846,7 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
         
         player.act();
         
-        if(deaths == virusAmountY * virusAmountX){
+        if(deaths >= virusAmountY * virusAmountX){
             state = WI;
             score += 500;
             level++;
@@ -773,7 +865,7 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             allow = false;
         }
         
-        System.out.println("Delay: " + tm.getDelay() + " | shotA: " + shotA + " | allow: " + allow);
+        System.out.println(" | shotA: " + shotA + " | allowTime: " + allowTime);
         
         //shot
         Iterator its = shots.iterator();
@@ -954,6 +1046,12 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
                     oppo = 3;
                 }
             }
+            if(state == US){
+                uspo--;
+                if(uspo == 0){
+                    uspo = 3;
+                }
+            }
         }
 
         if (key == KeyEvent.VK_DOWN){
@@ -974,6 +1072,12 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
                 oppo++;
                 if(oppo == 4){
                     oppo = 1;
+                }
+            }
+            if(state == US){
+                uspo++;
+                if(uspo == 4){
+                    uspo = 1;
                 }
             }
         }
@@ -1010,6 +1114,11 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
         if (key == KeyEvent.VK_Y){
             keyY = true;
             
+            if(state == YNOP && oppo == 1){
+                Username = JOptionPane.showInputDialog("Please enter your username:");
+                writeSaveFile();
+                state = OP;
+            }
             if(state == YNOP && oppo == 3){
                 resetAll();
                 state = ME;
@@ -1027,6 +1136,20 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
                 saveFile3 = false;
                 state = CS;
             }
+            
+            if(state == YNUS && uspo == 1){
+                triple = true;
+                state = US;
+            }
+            if(state == YNUS && uspo == 2){
+                rapidfire++;
+                allowTime = allowTime - 5;
+                state = US;
+            }
+            if(state == YNUS && uspo == 3){
+                nuke++;
+                state = US;
+            }
         }
         
         if (key == KeyEvent.VK_N){
@@ -1038,27 +1161,26 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             if(state == YNOP){
                 state = OP;
             }
-        }
-        
-        if (key == KeyEvent.VK_W){
-            state = WI;
-        }
-        
-        if (key == KeyEvent.VK_H){
-            readSaveFile();
+            if(state == YNUS){
+                state = US;
+            }
         }
         
         if (key == KeyEvent.VK_ESCAPE){
             ESC = true;
             
-            if(state == PA || state == WI || state == OP || state == HT){
+            if(state == PA || state == WI || state == OP || state == HT || state == US){
                 state = ME;
+                mepo = 1;
                 oppo = 1;
+                uspo = 1;
             }
             
             if(state == LO){
                 state = ME;
+                mepo = 1;
                 oppo = 1;
+                uspo = 1;
                 readSaveFile();
             }
         }
@@ -1066,24 +1188,32 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
         if (key == KeyEvent.VK_ENTER){
             ENTER = true;
             
-            if(state == OP && oppo == 1){
-                Username = JOptionPane.showInputDialog("Please enter your username:");
-                writeSaveFile();
-            }
             if(state == OP && oppo == 3){
                 state = YNOP;
+            }
+            
+            if(state == US && uspo == 1){
+                state = YNUS;
+            }
+            if(state == US && uspo == 2 && allowTime > 10){
+                state = YNUS;
+            }
+            if(state == US && uspo == 3){
+                state = YNUS;
             }
             
             if(state == ME && mepo == 1){
                 reset();
                 state = PL;
             }
+            if(state == ME && mepo == 2){
+                state = US;
+            }
             if(state == ME && mepo == 3){
                 state = HT;
             }
             if(state == ME && mepo == 4){
                 state = OP;
-                oppo=1;
             }
             if(state == ME && mepo == 5){
                 System.exit(0);
