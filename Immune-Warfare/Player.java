@@ -7,23 +7,23 @@ public class Player extends Sprite implements Commons{
     private final int ST_X = BO_WI / 2 - 16;
     private final int ST_Y = GROUND - 32;
     
-    private boolean SPACE, LEFT, RIGHT;
-    
-    private final String player = "/img/player/player1.png";
-    private final String playerl = "/img/player/player1l.png";
-    private final String playerr = "/img/player/player1r.png";
-    private final String playerahh = "/img/player/player1ahh.png";
-    private final String playerahhl = "/img/player/player1ahhl.png";
-    private final String playerahhr = "/img/player/player1ahhr.png";
-    
+    private boolean SPACE, LEFT, RIGHT, allow;
+        
     private int width;
     
-    ImageIcon ii = new ImageIcon(this.getClass().getResource(player));
-    ImageIcon iil = new ImageIcon(this.getClass().getResource(playerl));
-    ImageIcon iir = new ImageIcon(this.getClass().getResource(playerr));
-    ImageIcon iiahh = new ImageIcon(this.getClass().getResource(playerahh));
-    ImageIcon iiahhl = new ImageIcon(this.getClass().getResource(playerahhl));
-    ImageIcon iiahhr = new ImageIcon(this.getClass().getResource(playerahhr));
+    ImageIcon ii = new ImageIcon(this.getClass().getResource(playerImage));
+    ImageIcon iil = new ImageIcon(this.getClass().getResource(playerlImage));
+    ImageIcon iir = new ImageIcon(this.getClass().getResource(playerrImage));
+    ImageIcon iiahh = new ImageIcon(this.getClass().getResource(playerahhImage));
+    ImageIcon iiahhl = new ImageIcon(this.getClass().getResource(playerahhlImage));
+    ImageIcon iiahhr = new ImageIcon(this.getClass().getResource(playerahhrImage));
+    
+    ImageIcon iios = new ImageIcon(this.getClass().getResource(playerosImage));
+    ImageIcon iilos = new ImageIcon(this.getClass().getResource(playerlosImage));
+    ImageIcon iiros = new ImageIcon(this.getClass().getResource(playerrosImage));
+    ImageIcon iiahhos = new ImageIcon(this.getClass().getResource(playerahhosImage));
+    ImageIcon iiahhlos = new ImageIcon(this.getClass().getResource(playerahhlosImage));
+    ImageIcon iiahhros = new ImageIcon(this.getClass().getResource(playerahhrosImage));
     
     public Player(){
         setX(ST_X);
@@ -31,6 +31,8 @@ public class Player extends Sprite implements Commons{
     }
     
     public void act(){
+        allow = Board.allow;
+        
         width = ii.getImage().getWidth(null);
 
         x += + dxl + dxr;
@@ -39,25 +41,53 @@ public class Player extends Sprite implements Commons{
         if(x >= BO_WI - width - 8){x = BO_WI - width - 8;}
         
         if(dxl == 0 && dxr == 0){
-            setImage(ii.getImage());
+            if(allow == false){
+                setImage(iios.getImage());
+            }
+            else{
+                setImage(ii.getImage());
+            }
             if(SPACE == true){
-                setImage(iiahh.getImage());
+                if(allow == false){
+                    setImage(iiahhos.getImage());
+                }
+                else{
+                    setImage(iiahh.getImage());
+                }
             }
         }
-        else if(dxl == -2 && dxr == 0){
-            setImage(iil.getImage());
+        if(dxl == -2 && dxr == 0){
+            if(allow == false){
+                setImage(iilos.getImage());
+            }
+            else{
+                setImage(iil.getImage());
+            }
             if(SPACE == true){
-                setImage(iiahhl.getImage());
+                if(allow == false){
+                    setImage(iiahhlos.getImage());
+                }
+                else{
+                    setImage(iiahhl.getImage());
+                }
             }
         }
-        else if((dxl == 0 && dxr == 2)){
-            setImage(iir.getImage());
+        if((dxl == 0 && dxr == 2)){
+            if(allow == false){
+                setImage(iiros.getImage());
+            }
+            else{
+                setImage(iir.getImage());
+            }
             if(SPACE == true){
-                setImage(iiahhr.getImage());
+                if(allow == false){
+                    setImage(iiahhros.getImage());
+                }
+                else{
+                    setImage(iiahhr.getImage());
+                }
             }
         }
-        
-        
         
         if(RIGHT == true){dxr = 2;}
         else{dxr = 0;}
