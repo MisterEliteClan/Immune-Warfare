@@ -230,37 +230,37 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             else if(csf == 1){
                 FileReader fr = new FileReader("Save" + csf +".txt");
                 BufferedReader br = new BufferedReader(fr);
-                Username = br.readLine();
                 level = Integer.parseInt(br.readLine());
                 score = Integer.parseInt(br.readLine());
                 cash = Integer.parseInt(br.readLine());
                 triple = Integer.parseInt(br.readLine());
                 rapidfire = Integer.parseInt(br.readLine());
                 nuke = Integer.parseInt(br.readLine());
+                Username = br.readLine();
                 br.close();
             }
             else if(csf == 2){
                 FileReader fr = new FileReader("Save" + csf +".txt");
                 BufferedReader br = new BufferedReader(fr);
-                Username = br.readLine();
                 level = Integer.parseInt(br.readLine());
                 score = Integer.parseInt(br.readLine());
                 cash = Integer.parseInt(br.readLine());
                 triple = Integer.parseInt(br.readLine());
                 rapidfire = Integer.parseInt(br.readLine());
                 nuke = Integer.parseInt(br.readLine());
+                Username = br.readLine();
                 br.close();
             }
             else if(csf == 3){
                 FileReader fr = new FileReader("Save" + csf +".txt");
                 BufferedReader br = new BufferedReader(fr);
-                Username = br.readLine();
                 level = Integer.parseInt(br.readLine());
                 score = Integer.parseInt(br.readLine());
                 cash = Integer.parseInt(br.readLine());
                 triple = Integer.parseInt(br.readLine());
                 rapidfire = Integer.parseInt(br.readLine());
                 nuke = Integer.parseInt(br.readLine());
+                Username = br.readLine();
                 br.close();
             }
         }
@@ -285,8 +285,6 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             if(csf == 1){
                 FileWriter fw = new FileWriter("save"+ csf +".txt");
                 BufferedWriter bw = new BufferedWriter(fw);
-                bw.write("" + Username);
-                bw.close();
                 bw.write("" + level);       
                 bw.write(n);
                 bw.write("" + score);
@@ -299,6 +297,8 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
                 bw.write(n);
                 bw.write("" + nuke);
                 bw.write(n);
+                bw.write("" + Username);
+                bw.close();
                 saveFile1 = true;
                 FileWriter fw2 = new FileWriter("saveavailable.txt");
                 BufferedWriter bw2 = new BufferedWriter(fw2);
@@ -312,8 +312,6 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             if(csf == 2){
                 FileWriter fw = new FileWriter("save"+ csf +".txt");
                 BufferedWriter bw = new BufferedWriter(fw);
-                bw.write("" + Username);
-                bw.close();
                 bw.write("" + level);       
                 bw.write(n);
                 bw.write("" + score);
@@ -326,6 +324,8 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
                 bw.write(n);
                 bw.write("" + nuke);
                 bw.write(n);
+                bw.write("" + Username);
+                bw.close();
                 saveFile2 = true;
                 FileWriter fw2 = new FileWriter("saveavailable.txt");
                 BufferedWriter bw2 = new BufferedWriter(fw2);
@@ -339,8 +339,6 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             if(csf == 3){
                 FileWriter fw = new FileWriter("save"+ csf +".txt");
                 BufferedWriter bw = new BufferedWriter(fw);
-                bw.write("" + Username);
-                bw.close();
                 bw.write("" + level);       
                 bw.write(n);
                 bw.write("" + score);
@@ -353,6 +351,8 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
                 bw.write(n);
                 bw.write("" + nuke);
                 bw.write(n);
+                bw.write("" + Username);
+                bw.close();
                 saveFile3 = true;
                 FileWriter fw2 = new FileWriter("saveavailable.txt");
                 BufferedWriter bw2 = new BufferedWriter(fw2);
@@ -397,6 +397,12 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
                     FileReader fr = new FileReader("Save1.txt");
                     BufferedReader br = new BufferedReader(fr);
                     cstxt = br.readLine();
+                    cstxt = br.readLine();
+                    cstxt = br.readLine();
+                    cstxt = br.readLine();
+                    cstxt = br.readLine();
+                    cstxt = br.readLine();
+                    cstxt = br.readLine();
                     br.close();
                 }
                 catch(IOException e){
@@ -415,6 +421,12 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
                     FileReader fr = new FileReader("Save2.txt");
                     BufferedReader br = new BufferedReader(fr);
                     cstxt = br.readLine();
+                    cstxt = br.readLine();
+                    cstxt = br.readLine();
+                    cstxt = br.readLine();
+                    cstxt = br.readLine();
+                    cstxt = br.readLine();
+                    cstxt = br.readLine();
                     br.close();
                 }
                 catch(IOException e) {
@@ -432,6 +444,12 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
                 try {
                     FileReader fr = new FileReader("Save3.txt");
                     BufferedReader br = new BufferedReader(fr);
+                    cstxt = br.readLine();
+                    cstxt = br.readLine();
+                    cstxt = br.readLine();
+                    cstxt = br.readLine();
+                    cstxt = br.readLine();
+                    cstxt = br.readLine();
                     cstxt = br.readLine();
                     br.close();
                 }
