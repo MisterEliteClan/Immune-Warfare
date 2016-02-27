@@ -31,9 +31,9 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
     
     private int allowTime = 50;
     
-    public static boolean SPACE, UP, DOWN, LEFT, RIGHT, keyP, ESC, ENTER, keyY, keyN, allow;
+    public static boolean SPACE, UP, DOWN, LEFT, RIGHT, keyP, ESC, ENTER, keyY, keyN, allow, WIT;
     
-    public static int score, hp, shotA, cash, cashEarn;
+    public static int score, hp, shotA, cash, cashEarn,scoreStart;
     public static String scoreS, levelS, hpS, caS, caES, scoreSave, levelSave, Username;
     
     private boolean saveFile1 = false,saveFile2 = false,saveFile3 = false;
@@ -161,7 +161,22 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
 
             if (virus.isDying()) {
                 virus.die();
+                deaths++;
             }
+        }       
+        if(deaths >= virusAmountY * virusAmountX){
+            state = WI;
+        }else{
+            score = scoreStart + (deaths*100);
+            cashEarn = deaths*10;
+            deaths = 0;
+        }   
+        if(state == WI && WIT == false){
+            WIT = true;
+            score += 600;
+            cash += cashEarn+10;
+            level++;
+            writeSaveFile();
         }
     }
     
@@ -211,7 +226,7 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
         levelS = mIL.toString();
         Integer mIHP = new Integer(hp);
         hpS = mIHP.toString();
-        Integer mICAE = new Integer(cashEarn);
+        Integer mICAE = new Integer(cashEarn+10);
         caES = mICAE.toString();
         Integer mICA = new Integer(cash);
         caS = mICA.toString();
@@ -948,9 +963,9 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
                             ImageIcon ii = new ImageIcon(getClass().getResource(virusImage));
                             virus.setImage(ii.getImage());
                             virus.setDying(true);
-                            deaths++;
-                            score += 100;
-                            cashEarn += 10;
+                            //deaths++;
+                            //score += 100;
+                            //cashEarn += 10;
                             shot.die();
                         }
                     }
@@ -1072,14 +1087,6 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
         }
         else{
             allow = false;
-        }
-        
-        if(deaths >= virusAmountY * virusAmountX){
-            state = WI;
-            score += 500;
-            cash += cashEarn;
-            level++;
-            writeSaveFile();
         }
     }
         
@@ -1251,6 +1258,7 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
                 mepo = 1;
                 oppo = 1;
                 uspo = 1;
+                WIT = false;
             }
             
             if(state == LO){
@@ -1281,6 +1289,7 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             
             if(state == ME && mepo == 1){
                 reset();
+                scoreStart = score;
                 state = PL;
             }
             if(state == ME && mepo == 2){
