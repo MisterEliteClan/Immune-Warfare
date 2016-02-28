@@ -163,7 +163,8 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
                 virus.die();
                 deaths++;
             }
-        }       
+        }
+        
         if(deaths >= virusAmountY * virusAmountX){
             state = WI;
         }else{
@@ -174,7 +175,7 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
         if(state == WI && WIT == false){
             WIT = true;
             score += 600;
-            cash += cashEarn+10;
+            cash += cashEarn + 10;
             level++;
             writeSaveFile();
         }
@@ -963,9 +964,6 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
                             ImageIcon ii = new ImageIcon(getClass().getResource(virusImage));
                             virus.setImage(ii.getImage());
                             virus.setDying(true);
-                            //deaths++;
-                            //score += 100;
-                            //cashEarn += 10;
                             shot.die();
                         }
                     }
@@ -1170,6 +1168,15 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
                 tmV--;
                 if(tmV <= 0){tmV = 25;}
             }
+            
+            if(key == KeyEvent.VK_SPACE){
+                if(state == PL){
+                    if(allow == true){
+                        newShot();
+                        shotA = allowTime;
+                    }
+                }
+            }
         }
         
         if (key == KeyEvent.VK_RIGHT){
@@ -1178,6 +1185,15 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             if(state == OP && oppo == 2){
                 tmV++;
                 if(tmV >= 26){tmV = 1;}
+            }
+            
+            if(key == KeyEvent.VK_SPACE){
+                if(state == PL){
+                    if(allow == true){
+                        newShot();
+                        shotA = allowTime;
+                    }
+                }
             }
         }
         
