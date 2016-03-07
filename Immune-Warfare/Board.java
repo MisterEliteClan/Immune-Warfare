@@ -30,10 +30,11 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
     Timer tm = new Timer(tmV,this);
     
     private int allowTime = 50;
+    private int allowTimeKeys = 10;
     
-    public static boolean SPACE, UP, DOWN, LEFT, RIGHT, keyP, ESC, ENTER, keyY, keyN, allow, WIT;
+    public static boolean SPACE, UP, DOWN, LEFT, RIGHT, keyP, ESC, ENTER, DELETE, keyY, keyN, allow, allowKeys, WIT;
     
-    public static int score, hp, shotA, cash, cashEarn,scoreStart;
+    public static int score, hp, shotA, keyA, cash, cashEarn,scoreStart;
     public static String scoreS, levelS, hpS, caS, caES, scoreSave, levelSave, Username;
     
     private boolean saveFile1 = false,saveFile2 = false,saveFile3 = false;
@@ -135,6 +136,9 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
         level = 1;
         score = 0;
         cash = 0;
+        rapidfire = 1;
+        triple = 0;
+        nuke = 0;
         writeSaveFile();
     }
     
@@ -163,8 +167,7 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
                 virus.die();
                 deaths++;
             }
-        }
-        
+        }       
         if(deaths >= virusAmountY * virusAmountX){
             state = WI;
         }else{
@@ -175,7 +178,7 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
         if(state == WI && WIT == false){
             WIT = true;
             score += 600;
-            cash += cashEarn + 10;
+            cash += cashEarn+10;
             level++;
             writeSaveFile();
         }
@@ -500,7 +503,8 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
 
         if(state == ME){
             String menutxt = "";
-            String mepo1 = "Start Game";
+            String mepo1 = "Next level";
+            if(level == 1){mepo1 = "Start Game";}
             String mepo2 = "Upgrade Shop";
             String mepo3 = "How to play?";
             String mepo4 = "Options";
@@ -828,10 +832,7 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
         
         if(state == PL || state == PA || state == LO || state == WI){
             String playtxt;
-            
-            //ImageIcon pl_bgii = new ImageIcon(this.getClass().getResource(sampleimg));
-            //g.drawImage(pl_bgii.getImage(), 0, 0, null);
-            
+                       
             g.setColor(grayLight);
             g.fillRect(0, TOP, BO_WI, 4); 
             g.fillRect(0, GROUND, BO_WI, 4);
@@ -964,6 +965,9 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
                             ImageIcon ii = new ImageIcon(getClass().getResource(virusImage));
                             virus.setImage(ii.getImage());
                             virus.setDying(true);
+                            //deaths++;
+                            //score += 100;
+                            //cashEarn += 10;
                             shot.die();
                         }
                     }
@@ -1074,12 +1078,13 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
                 }
             }
         }
-        
+               
         if(score < 0){score = 0;}
         
         if(shotA >= 0){
             shotA --;
         }
+        
         if(shotA <= 0){
             allow = true;
         }
@@ -1087,26 +1092,38 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             allow = false;
         }
     }
-        
+    
     public void actionPerformed(ActionEvent e){
         repaint();
-        if(state == PL){animationCycle();}
+        if(state == PL){           
+            animationCycle();
+        }
+        keysAction();
     }
     
-    public void keyTyped(KeyEvent e){
+    public void keysAction(){
+        if(keyA >= 0){
+            keyA --;
+        }
         
-    }
-    
-    @Override
-    public void keyPressed(KeyEvent e) {
-        int key = e.getKeyCode();
-        player.keyPressed(e);
+        if(keyA <= 0){
+            allowKeys = true;
+        }
+        else{
+            allowKeys = false;
+        }
         
-        int x = player.getX();
-        int y = player.getY();
+        if(allowKeys == true){
         
-        if (key == KeyEvent.VK_UP){
-            UP = true;
+        if(SPACE == true && state == PL){
+            if(allow == true){
+                newShot();
+                shotA = allowTime;
+            }
+            keyA = allowTimeKeys;
+        }
+        
+        if(UP == true){
             if(state == CS){
                 cspo--;
                 if(cspo == 0){
@@ -1131,10 +1148,10 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
                     uspo = 3;
                 }
             }
+            keyA = allowTimeKeys;
         }
-
-        if (key == KeyEvent.VK_DOWN){
-            DOWN = true;
+        
+        if(DOWN == true){
             if(state == CS){
                 cspo++;
                 if(cspo == 4){
@@ -1159,58 +1176,36 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
                     uspo = 1;
                 }
             }
+            keyA = allowTimeKeys;
         }
         
-        if (key == KeyEvent.VK_LEFT){
-            LEFT = true;
-            
+        if(LEFT == true){
             if(state == OP && oppo == 2){
                 tmV--;
                 if(tmV <= 0){tmV = 25;}
             }
-            
-            if(key == KeyEvent.VK_SPACE){
-                if(state == PL){
-                    if(allow == true){
-                        newShot();
-                        shotA = allowTime;
-                    }
-                }
-            }
+            keyA = allowTimeKeys;
         }
         
-        if (key == KeyEvent.VK_RIGHT){
-            RIGHT = true;
-            
+        if(RIGHT == true){
             if(state == OP && oppo == 2){
                 tmV++;
                 if(tmV >= 26){tmV = 1;}
             }
-            
-            if(key == KeyEvent.VK_SPACE){
-                if(state == PL){
-                    if(allow == true){
-                        newShot();
-                        shotA = allowTime;
-                    }
-                }
-            }
+            keyA = allowTimeKeys;
         }
         
-        if (key == KeyEvent.VK_P){
-            keyP = true;
-            
+        if(keyP == true){
             if(state == PL){
                 state = PA;
             }
             else if(state == PA){
                 state = PL;
             }
+            keyA = allowTimeKeys;
         }
         
-        if (key == KeyEvent.VK_Y){
-            keyY = true;
-            
+        if(keyY == true){
             if(state == YNOP && oppo == 1){
                 Username = JOptionPane.showInputDialog("Please enter your username:");
                 writeSaveFile();
@@ -1250,11 +1245,10 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
                 cash -= nukeCost;
                 state = US;
             }
+            keyA = allowTimeKeys;
         }
         
-        if (key == KeyEvent.VK_N){
-            keyN = true;
-            
+        if(keyN == true){        
             if(state == YNCS){
                 state = CS;
             }
@@ -1264,11 +1258,10 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             if(state == YNUS){
                 state = US;
             }
+            keyA = allowTimeKeys;
         }
         
-        if (key == KeyEvent.VK_ESCAPE){
-            ESC = true;
-            
+        if(ESC == true){
             if(state == PA || state == WI || state == OP || state == HT || state == US){
                 state = ME;
                 mepo = 1;
@@ -1284,11 +1277,10 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
                 uspo = 1;
                 readSaveFile();
             }
+            keyA = allowTimeKeys;
         }
         
-        if (key == KeyEvent.VK_ENTER){
-            ENTER = true;
-            
+        if(ENTER == true){
             if(state == OP && oppo == 3){
                 state = YNOP;
             }
@@ -1363,18 +1355,10 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
                     state = ME;
                 }
             }
-        }    
-        
-        if(key == KeyEvent.VK_SPACE){
-            if(state == PL){
-                if(allow == true){
-                    newShot();
-                    shotA = allowTime;
-                }
-            }
+            keyA = allowTimeKeys;
         }
         
-        if(key == KeyEvent.VK_DELETE){
+        if(DELETE == true){
             if(state == CS && cspo == 1){
                 csf = 1;
                 if(saveFile1 == true){
@@ -1393,6 +1377,63 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
                     state = YNCS;
                 }
             }
+            keyA = allowTimeKeys;
+        }
+        
+        }
+    }
+        
+    public void keyTyped(KeyEvent e){
+        
+    }
+    
+    @Override
+    public void keyPressed(KeyEvent e) {
+        int key = e.getKeyCode();
+        player.keyPressed(e);
+        
+        if (key == KeyEvent.VK_UP){
+            UP = true;
+        }
+
+        if (key == KeyEvent.VK_DOWN){
+            DOWN = true;
+        }
+        
+        if (key == KeyEvent.VK_LEFT){
+            LEFT = true;
+        }
+        
+        if (key == KeyEvent.VK_RIGHT){
+            RIGHT = true;
+        }
+        
+        if (key == KeyEvent.VK_P){
+            keyP = true;
+        }
+        
+        if (key == KeyEvent.VK_Y){
+            keyY = true;
+        }
+        
+        if (key == KeyEvent.VK_N){
+            keyN = true;
+        }
+        
+        if (key == KeyEvent.VK_ESCAPE){
+            ESC = true;
+        }
+        
+        if (key == KeyEvent.VK_ENTER){
+            ENTER = true;
+        }    
+        
+        if(key == KeyEvent.VK_SPACE){
+            SPACE = true;
+        }
+        
+        if(key == KeyEvent.VK_DELETE){
+            DELETE = true;
         }
     }
 
@@ -1417,8 +1458,32 @@ public class Board extends JPanel implements KeyListener, ActionListener, Common
             RIGHT = false;
         }
         
-        if (key == KeyEvent.VK_SPACE){
+        if (key == KeyEvent.VK_P){
+            keyP = false;
+        }
+        
+        if (key == KeyEvent.VK_Y){
+            keyY = false;
+        }
+        
+        if (key == KeyEvent.VK_N){
+            keyN = false;
+        }
+        
+        if (key == KeyEvent.VK_ESCAPE){
+            ESC = false;
+        }
+        
+        if (key == KeyEvent.VK_ENTER){
+            ENTER = false;
+        }    
+        
+        if(key == KeyEvent.VK_SPACE){
             SPACE = false;
+        }
+        
+        if(key == KeyEvent.VK_DELETE){
+            DELETE = false;
         }
     }
 }
