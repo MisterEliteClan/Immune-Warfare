@@ -64,6 +64,7 @@ public interface Commons{
     Color orange = new Color (255, 153, 0);
     Color yellow = new Color (255, 230, 0);
     Color green = new Color (204, 255, 51);
+    Color gold = new Color (255, 255, 125);
     
     //images
     public static final String pa_bg = "/img/backgrounds/graytransbg.png";
